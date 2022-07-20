@@ -1,0 +1,106 @@
+.packages-container h1{
+	/*font-size: 1.3em;*/
+	border-bottom: 2px solid #ddd;
+}
+/* #special_tour{
+	position: relative;
+	top: 25px;
+}
+#national_tour{
+	position: relative;
+	top: 35px;
+}
+#international_tour{
+	position: relative;
+	top: 35px;
+} */
+.packages-container h2{
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 10px;
+	width: fit-content;
+}
+/* .package_des{
+	width: 58%;
+	float: left;
+	margin-left: 20px;
+	line-height: 28px;
+} */
+.package_des ul{
+	list-style-type: disc;
+}
+.package_des h3{
+	color: #30B4F9;
+	margin-top: 30px;
+}
+.package_des table caption{
+	font-weight: bold;
+	text-align: left;
+	caption-side: top;
+}
+
+
+.booking-btn{
+	position: relative;
+	/* bottom: 0; */
+}
+.booking-btn:hover{
+	background-color: rgb(137, 83, 150);
+	cursor: pointer;
+}
+/* .package_img{
+	width: 38%;
+	float: left;
+	margin: 20px 0 0 20px;
+} */
+.package_img{
+	margin-top: 35px;
+}
+.package_img img{
+	width: 100%;
+	height: auto;
+	margin-top: 10px;
+	border-radius: 5px;
+}
+
+.nt-cont{
+	/*clear: both;*/
+	border-top: 1px solid #ddd;
+	margin-top: 20px;
+}
+
+
+/*About Us*/
+
+.our_works h2{
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	width: fit-content;
+	border-bottom: 1px solid #ddd;
+}
+.our_works p{
+	margin-bottom: 15px;
+}
+.ser_desc{
+	text-align: justify;
+	padding: 10px;
+}
+.ser_desc button{
+	position: relative;
+	left: 435px;
+	bottom: 55px;
+}
+.ser_desc button:hover{
+	cursor: pointer;
+	color: white;
+	background-color: rgb(137, 83, 150);
+	transition: 0.3s all;
+}
+.ser_img{
+	padding: 10px;
+}
+.ser_img img{
+	width: 95%;
+	height: 300px;
+	object-fit: cover;
+	border-radius: 5px;
+}
