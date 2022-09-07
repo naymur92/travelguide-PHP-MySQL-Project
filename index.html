@@ -51,7 +51,7 @@
 							<li><a href="index.html">Home</a></li>
 							<!-- Dropdown -->
 						    <li class="dropdown">
-						      <a class="dropdown-toggle" href="package.html" id="navbardrop" data-toggle="dropdown">Our Packages</a>
+						      <a class="dropdown-toggle" href="" id="navbardrop" data-toggle="dropdown" onclick="location.href='package.html'">Our Packages</a>
 						      <div class="dropdown-menu">
 						        <a class="dropdown-item" href="package.html#umrah">Umrah Package</a>
 						        <a class="dropdown-item" href="package.html#special_tour">Special Tour Package</a>
@@ -62,6 +62,15 @@
 							<li><a href="gallery.html">Gallery</a></li>
 							<li><a href="about.html">About</a></li>
 							<li><a href="contact.html">Contact</a></li>
+							<li class="nav-item">
+								<div class="menu_search">
+									<form action="http://www.google.com/search" method="get">
+										<input type="text" name="q" class="form-control" placeholder="Search here" onfocus="this.placeholder=''" onblur="this.placeholder='Search here'">
+										<br>
+										<button type="submit"><i class="fa fas fa-search"></i></button>
+									</form>
+								</div>
+							</li>
 					    </ul>
 					  </div>						
 				</div>
@@ -70,66 +79,69 @@
 		<!-- End Header Area -->				
 	</section>
 
-	<section class="default-banner active-blog-slider">
-			<div class="item-slider relative" style="background: url(img/slider1.jpg);background-size: cover;">
-				<div class="overlay" style="background: rgba(0,0,0,.3)"></div>
-				<div class="container">
-					<div class="row fullscreen justify-content-center align-items-center">
-						<div class="col-md-10 col-12">
-							<div class="banner-content text-center">
-								<h4 class="text-white mb-20 text-uppercase">Discover the World!</h4>
-								<h1 class="text-uppercase text-white">New Adventure</h1>
-								<p class="text-white"><strong>Bandarban Hill District</strong> is the remotest and least populated district in Bangladesh. The lure of the tallest peaks of Bangladesh, treks through virgin forests and chance to meet more than 15 tribes of the region up close is growing both among Bangladeshis and tourists from other countries.
-								<br><br>Bandarban, a <b>4,479 km²</b> wide area with a population of <b>292,900</b> (2003 est.) inside Bangladesh is bordered by Cox’s Bazaar, Chittagong, Rangamati and Khagrachari. On the other side of the <b>129 kilometer</b> international border lies <b>Myanmar</b> provinces of <b>Chin</b> and <b>Arakan</b>.
-								</p>
-								<a href="package.html" class="text-uppercase header-btn">Discover Now</a>	
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
-			<div class="item-slider relative" style="background: url(img/slider2.jpg);background-size: cover;">
-				<div class="overlay" style="background: rgba(0,0,0,.3)"></div>
-				<div class="container">
-					<div class="row fullscreen justify-content-center align-items-center">
-						<div class="col-md-10 col-12">
-							<div class="banner-content text-center">
-								<h4 class="text-white mb-20 text-uppercase">Discover the World!</h4>
-								<h1 class="text-uppercase text-white">New Trip</h1>
-								<p class="text-white">Bangladesh is a land of rivers. There are many rivers in our country. Some are big and some are small. In fact, the pride of Bangladesh is her rivers with one of the largest networks in the world.
-								<br><br>
-								In spite of being a very small country, Bangladesh has an amazing number of about 700 rivers. The Padma, the Meghna, the Jamuna are the big and wide rivers. The Buriganga, the Sitalakshya, the Dhaleswari, the Teesta, the Madhumati, the Gumati, and the Karnafoli are small rivers. Most of the rivers of our country rise from the Himalayas and fall into the Bay of Bengal.</p>
-								<a href="package.html" class="text-uppercase header-btn">Discover Now</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="item-slider relative" style="background: url(img/slider3.jpg);background-size: cover;">
-				<div class="overlay" style="background: rgba(0,0,0,.3)"></div>
-				<div class="container">
-					<div class="row fullscreen justify-content-center align-items-center">
-						<div class="col-md-10 col-12">
-							<div class="banner-content text-center">
-								<h4 class="text-white mb-20 text-uppercase">Discover the World!</h4>
-								<h1 class="text-uppercase text-white">New Experience</h1>
-								<p class="text-white">Travel makes us wealthier. We see new places, meet new people, indulge in new activities. The experiences make us a different person. Travelling isn’t merely about stepping foot on a landmark, but also inhaling the essence of the very place. The culture and the beauty should grow in you.</p>
-								<a href="package.html" class="text-uppercase header-btn">Discover Now</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+	<!-- Search box -->
+	<div class="container">
+		<section class="row search-bar justify-content-center">
+			<form action="http://www.google.com/search" method="get">
+				<input type="text" name="q" class="form-control" placeholder="Where do you want to go?" onfocus="this.placeholder=''" onblur="this.placeholder='Where do you want to go?'">
+				<br>
+				<button type="submit"><i class="fa fas fa-search"></i></button>
+			</form>
 		</section>
-		<div class="container">
-			<section class="search-bar d-flex justify-content-center">
-				<form action="http://www.google.com/search" method="get">
-					<input type="text" name="q" placeholder="Where do you want to go?" onfocus="this.placeholder=''" onblur="this.placeholder='Where do you want to go?'">
-					<button type="submit"><i class="fa fas fa-search"></i></button>
-				</form>
-			</section>
+	</div>
+
+	<section class="default-banner active-blog-slider">
+		<div class="item-slider relative" style="background: url(img/slider1.jpg);background-size: cover;">
+			<div class="overlay" style="background: rgba(0,0,0,.3)"></div>
+			<div class="container">
+				<div class="row fullscreen justify-content-center align-items-center">
+					<div class="col-md-10 col-12">
+						<div class="banner-content text-center">
+							<h4 class="text-white mb-20 text-uppercase">Discover the World!</h4>
+							<h1 class="text-uppercase text-white">New Adventure</h1>
+							<p class="text-white"><strong>Bandarban Hill District</strong> is the remotest and least populated district in Bangladesh. The lure of the tallest peaks of Bangladesh, treks through virgin forests and chance to meet more than 15 tribes of the region up close is growing both among Bangladeshis and tourists from other countries.
+							<!-- <br><br>Bandarban, a <b>4,479 km²</b> wide area with a population of <b>292,900</b> (2003 est.) inside Bangladesh is bordered by Cox’s Bazaar, Chittagong, Rangamati and Khagrachari. On the other side of the <b>129 kilometer</b> international border lies <b>Myanmar</b> provinces of <b>Chin</b> and <b>Arakan</b>. -->
+							</p>
+							<a href="package.html" class="text-uppercase header-btn">Discover Now</a>	
+						</div>
+					</div>
+
+				</div>
+			</div>
 		</div>
+		<div class="item-slider relative" style="background: url(img/slider2.jpg);background-size: cover;">
+			<div class="overlay" style="background: rgba(0,0,0,.3)"></div>
+			<div class="container">
+				<div class="row fullscreen justify-content-center align-items-center">
+					<div class="col-md-10 col-12">
+						<div class="banner-content text-center">
+							<h4 class="text-white mb-20 text-uppercase">Discover the World!</h4>
+							<h1 class="text-uppercase text-white">New Trip</h1>
+							<p class="text-white">In spite of being a very small country, Bangladesh has an amazing number of about 700 rivers. The Padma, the Meghna, the Jamuna are the big and wide rivers. The Buriganga, the Sitalakshya, the Dhaleswari, the Teesta, the Madhumati, the Gumati, and the Karnafoli are small rivers. Most of the rivers of our country rise from the Himalayas and fall into the Bay of Bengal.</p>
+							<a href="package.html" class="text-uppercase header-btn">Discover Now</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="item-slider relative" style="background: url(img/slider3.jpg);background-size: cover;">
+			<div class="overlay" style="background: rgba(0,0,0,.3)"></div>
+			<div class="container">
+				<div class="row fullscreen justify-content-center align-items-center">
+					<div class="col-md-10 col-12">
+						<div class="banner-content text-center">
+							<h4 class="text-white mb-20 text-uppercase">Discover the World!</h4>
+							<h1 class="text-uppercase text-white">New Experience</h1>
+							<p class="text-white">Travel makes us wealthier. We see new places, meet new people, indulge in new activities. The experiences make us a different person. Travelling isn&apos;t merely about stepping foot on a landmark, but also inhaling the essence of the very place. The culture and the beauty should grow in you.</p>
+							<a href="package.html" class="text-uppercase header-btn">Discover Now</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	
 		
 			
 

@@ -1881,7 +1881,7 @@ h1, h2, h3, h4, h5, h6 {
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 9;
+  z-index: 99;
 }
 
 .menu-bar {
