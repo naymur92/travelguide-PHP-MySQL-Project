@@ -51,71 +51,113 @@ if (isset($_SESSION['login_status'])) {
 
           <div class="card">
             <div class="card-body register-card-body">
-              <h4 class="login-box-msg text-primary mb-5">Register a new membership</h4>
+              <p class="login-box-msg text-primary mb-5">Register a new membership</p>
               <?php
+                $errors = array();
                 if(isset($_POST['submit'])){
                   extract($_POST);
-                  $errors = array();
+                  // Check duplicate email
+                  $result = $dbcon->query("SELECT email FROM users WHERE email='$email'");
+                  if($result->num_rows==1){
+                    $errors['dupemail'] = "<p class='text-danger'>Email already used!</p>";
+                  }
+                  // Check duplicate phone
+                  $result = $dbcon->query("SELECT phone FROM user_info WHERE phone='$phone'");
+                  if($result->num_rows==1){
+                    $errors['dupphone'] = "<p class='text-danger'>Phone number already used!</p>";
+                  }
+                  // Check duplicate username
+                  $result = $dbcon->query("SELECT username FROM users WHERE username='$username'");
+                  if($result->num_rows==1){
+                    $errors['dupusername'] = "<p class='text-danger'>Username already used!</p>";
+                  }
+
+                  // Check password matching
                   if($password != $confirm_password){
-                    $errors['password'] = "<h4 class='p-3 text-danger mb-3 text-center text-white rounded'>Password didn't match!</h4>";
+                    $errors['password'] = "<p class='text-danger'>Password didn't match!</p>";
                   }
 
                   $filename = $_FILES['pthumb']['name'];
-                  $ext = end(explode(".", "$filename"));
-                  $ext = strtolower($ext);
-
-                  $filesize = $_FILES['pthumb']['size'];
-                  if($filename>500*1024){
-                    $errors['size'] = "<h4 class='p-5 text-danger mb-3 text-center text-white rounded'>File size must be below 500KB!</h4>";
+                  if(strlen($filename) != 0){
+                    // Check file type
+                    $ext = explode(".", "$filename");
+                    $ext = strtolower(end($ext));
+                    $types = array("jpg", "jpeg", "png", "gif");
+                    if(!in_array($ext, $types)){
+                      $errors['type'] = "<p class='text-danger'>File must be an image file!</p>";
+                    }
+                    // Check file size
+                    $filesize = $_FILES['pthumb']['size'];
+                    if($filesize>500*1024){
+                      $errors['size'] = "<p class='text-danger'>File size must be below 500KB!</p>";
+                    }
                   }
+
                   $tmpname = $_FILES['pthumb']['tmp_name'];
                   // $filename = $_FILES['pthumb']['name'];
                 }
               ?>
               <form action="" method="post" enctype="multipart/form-data">
-                <fieldset class="rounded mb-3" style="border: 1px solid #dc3545; padding: 10px">
+                <fieldset class="rounded mb-3" style="border: 1px solid #007bff; padding: 10px">
                   <legend style="width: fit-content;">Name</legend>
                   <div class="row mb-3">
                     <div class="col-6">
-                      <input type="text" name="firstname" class="form-control" placeholder="First Name">
+                      <input type="text" name="firstname" class="form-control" placeholder="First Name" value="<?php if(count($errors)>0) echo $firstname ?>" required>
                     </div>
                     <div class="col-6">
-                      <input type="text" name="lastname" class="form-control" placeholder="Last Name">
+                      <input type="text" name="lastname" class="form-control" placeholder="Last Name" value="<?php if(count($errors)>0) echo $lastname ?>">
                     </div>
                   </div>
                 </fieldset>
-                <fieldset class="rounded mb-3" style="border: 1px solid #dc3545; padding: 10px">
+                <fieldset class="rounded mb-3" style="border: 1px solid #007bff; padding: 10px">
                   <legend style="width: fit-content;">Contact Information</legend>
                   <div class="input-group mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="Email">
+                    <input type="email" name="email" class="form-control" placeholder="Email" value="<?php if(count($errors)>0) echo $email ?>" required>
                     <div class="input-group-append">
                       <div class="input-group-text">
                         <span class="fa fas fa-envelope"></span>
                       </div>
                     </div>
                   </div>
-                  <div class="input-group mb-3">
-                    <input type="text" name="phone" class="form-control" placeholder="Phone">
-                    <div class="input-group-append">
-                      <div class="input-group-text">
-                        <span class="fa fas fa-phone"></span>
+                  <?= isset($errors['dupemail'])? $errors['dupemail']: "" ?>
+                  <div class="row">
+                    <div class="col-6">
+                      <div class="input-group mb-3">
+                        <input type="text" name="phone" class="form-control" placeholder="Phone" value="<?php if(count($errors)>0) echo $phone ?>">
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <span class="fa fas fa-phone"></span>
+                          </div>
+                        </div>
                       </div>
+                      <?= isset($errors['dupphone'])? $errors['dupphone']: "" ?>
+                    </div>
+                    <div class="col-6">
+                      <div class="input-group mb-3">
+                        <input type="text" name="username" class="form-control" placeholder="User Name" value="<?php if(count($errors)>0) echo $username ?>" required>
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <span class="fa fas fa-user"></span>
+                          </div>
+                        </div>
+                      </div>
+                      <?= isset($errors['dupusername'])? $errors['dupusername']: "" ?>
                     </div>
                   </div>
                 </fieldset>
-                <fieldset class="rounded mb-3" style="border: 1px solid #dc3545; padding: 10px">
+                <fieldset class="rounded mb-3" style="border: 1px solid #007bff; padding: 10px">
                   <legend style="width: fit-content;">Address</legend>
                   <div class="row mb-3">
                     <div class="col-6">
-                      <input type="text" name="country" class="form-control mb-3" placeholder="Country">
-                      <input type="text" name="postcode" class="form-control mb-3" placeholder="Postal Code">
+                      <input type="text" name="country" class="form-control mb-3" placeholder="Country" value="<?php if(count($errors)>0) echo $country ?>">
+                      <input type="text" name="postcode" class="form-control mb-3" placeholder="Postal Code" value="<?php if(count($errors)>0) echo $postcode ?>">
                     </div>
                     <div class="col-6">
-                      <textarea name="address" class="form-control" placeholder="Enter Address" rows="5"></textarea>
+                      <textarea name="address" class="form-control" placeholder="Enter Address" rows="5"><?php if(count($errors)>0) echo $address ?></textarea>
                     </div>
                   </div>
                 </fieldset>
-                <fieldset class="rounded mb-3" style="border: 1px solid #dc3545; padding: 10px">
+                <fieldset class="rounded mb-3" style="border: 1px solid #007bff; padding: 10px">
                   <legend style="width: fit-content;">Profile Picture</legend>
                   <div class="form-group">
                     <label for="inputThumb"></label>
@@ -129,17 +171,18 @@ if (isset($_SESSION['login_status'])) {
                       </div>
                     </div>
                   </div>
-                  <?= isset($errors['size'])? $errors['size']: "" ?>
+                  <?= isset($errors['size'])? $errors['size']: "" ?><br>
+                  <?= isset($errors['type'])? $errors['type']: "" ?>
 
                   <!-- Selected photo will show here -->
                   <img src="<?= isset($row['pthumb']) ? "img/profile_pictures/" . $row['pthumb'] : '' ?>" alt="selected image will show here" height="200px" id="showSelectedPhoto">
                 </fieldset>
-                <fieldset class="rounded mb-3" style="border: 1px solid #dc3545; padding: 10px">
+                <fieldset class="rounded mb-3" style="border: 1px solid #007bff; padding: 10px">
                   <legend style="width: fit-content;">Password</legend>
                   <div class="row mb-3">
                     <div class="col-6">
                       <div class="input-group mb-3">
-                        <input type="password" id="password" name="password" class="form-control" placeholder="Password" onkeyup="check()">
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Password" value="<?php if(count($errors)>0) echo $password ?>" onkeyup="check()" required>
                         <div class="input-group-append">
                           <div class="input-group-text">
                             <span class="fa fas fa-lock"></span>
@@ -149,7 +192,7 @@ if (isset($_SESSION['login_status'])) {
                     </div>
                     <div class="col-6">
                       <div class="input-group mb-3">
-                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Retype password" onkeyup="check()">
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Retype password" onkeyup="check()" required>
                         <div class="input-group-append">
                           <div class="input-group-text">
                             <span class="fa fas fa-lock"></span>
@@ -198,16 +241,57 @@ if (isset($_SESSION['login_status'])) {
               <a href="index.php"><button class="btn btn-warning px-4 py-2 text-white">Back</button></a>
             </div>
             <?php
-              if(isset($_POST['submit']) && !isset($passnotmatch)){
+              if(isset($_POST['submit']) && count($errors)==0){
                 $fullname = trim($firstname)." ".trim($lastname);
-                $hashedPass = md5($password);
+                $hashedPass = md5($password);                
                 
-                $transaction = true;
+                $transaction = 1;
+                // File uploading process
+                if(strlen($filename) == 0){
+                  $newfilename = null;
+                } else{
+                  $newfilename = $username.".".$ext;
+                  $dest = "img/profile_pictures/";
+                  if(is_uploaded_file($tmpname)){
+                    if(!move_uploaded_file($tmpname, $dest.$newfilename))
+                    $upload = "ok";
+                    $transaction = 0;
+                  }
+                }
+                
+                $dbcon->autocommit(false);
                 $dbcon->begin_transaction();
-                $sql = "INSERT INTO users VALUES(NULL, '$fullname', '$email', '$hashedPass', DEFAULT, DEFAULT, DEFAULT)";
+
+                // First transaction
+                $sql = "INSERT INTO users VALUES(NULL, '$fullname', '$email', '$username, '$hashedPass', DEFAULT, DEFAULT, DEFAULT)";
                 $dbcon->query($sql);
                 if($dbcon->affected_rows!=1){
-                  $transaction = false;
+                  $transaction = 0;
+                }
+                // Get last user id
+                $result = $dbcon->query("SELECT MAX(id) FROM users");
+                $row = $result->fetch_array();
+                $user_id = $row[0];
+
+                // Second transactions
+                $sql = "INSERT INTO user_info VALUES(NULL, '$firstname', '$lastname', '$email', '$phone', '$country', '$postcode', '$address', '$newfilename', '$user_id')";
+                $dbcon->query($sql);
+                if($dbcon->affected_rows!=1){
+                  $transaction = 0;
+                }
+                if($transaction==0){
+                  $dbcon->rollback();
+                  if(isset($upload))
+                  unlink("$dest.$newfilename");
+                  echo '<script>alert("Problem in registering.")</script>';
+                } else{
+                  $dbcon->commit();
+                  ?>
+                  <script>
+                    alert("Successfully Registered.")
+                    location.href="login.php"
+                  </script>
+                  <?php
                 }
 
                 
