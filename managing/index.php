@@ -1,10 +1,14 @@
 <?php include "../includes/dbcon.php" ?>
 <?php
 
-  session_start();
-  if(!isset($_SESSION['user_type']) || ($_SESSION['user_type']==3)){
-    $loc = base_url."/login.php";
-    header("Location:$loc");
+  if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+  }
+  if(isset($_SESSION['user_type'])){
+    if(($_SESSION['user_type']==3))
+    header("Location:../user_dashboard.php");
+  } else {
+    header("Location:../login.php");
   }
 
 ?>

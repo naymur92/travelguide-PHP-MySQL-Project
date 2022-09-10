@@ -52,42 +52,70 @@ if (isset($_SESSION['login_status'])) {
           <div class="card">
             <div class="card-body register-card-body">
               <h4 class="login-box-msg text-primary mb-5">Register a new membership</h4>
+              <?php
+                if(isset($_POST['submit'])){
+                  extract($_POST);
+                  $errors = array();
+                  if($password != $confirm_password){
+                    $errors['password'] = "<h4 class='p-3 text-danger mb-3 text-center text-white rounded'>Password didn't match!</h4>";
+                  }
 
-              <form action="" method="post">
-                <div class="row mb-3">
-                  <div class="col-6">
-                    <input type="text" name="firstname" class="form-control" placeholder="First Name">
-                  </div>
-                  <div class="col-6">
-                    <input type="text" name="lastname" class="form-control" placeholder="Last Name">
-                  </div>
-                </div>
-                <div class="input-group mb-3">
-                  <input type="email" name="email" class="form-control" placeholder="Email">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fa fas fa-envelope"></span>
+                  $filename = $_FILES['pthumb']['name'];
+                  $ext = end(explode(".", "$filename"));
+                  $ext = strtolower($ext);
+
+                  $filesize = $_FILES['pthumb']['size'];
+                  if($filename>500*1024){
+                    $errors['size'] = "<h4 class='p-5 text-danger mb-3 text-center text-white rounded'>File size must be below 500KB!</h4>";
+                  }
+                  $tmpname = $_FILES['pthumb']['tmp_name'];
+                  // $filename = $_FILES['pthumb']['name'];
+                }
+              ?>
+              <form action="" method="post" enctype="multipart/form-data">
+                <fieldset class="rounded mb-3" style="border: 1px solid #dc3545; padding: 10px">
+                  <legend style="width: fit-content;">Name</legend>
+                  <div class="row mb-3">
+                    <div class="col-6">
+                      <input type="text" name="firstname" class="form-control" placeholder="First Name">
+                    </div>
+                    <div class="col-6">
+                      <input type="text" name="lastname" class="form-control" placeholder="Last Name">
                     </div>
                   </div>
-                </div>
-                <div class="input-group mb-3">
-                  <input type="text" name="phone" class="form-control" placeholder="Phone">
-                  <div class="input-group-append">
-                    <div class="input-group-text">
-                      <span class="fa fas fa-phone"></span>
+                </fieldset>
+                <fieldset class="rounded mb-3" style="border: 1px solid #dc3545; padding: 10px">
+                  <legend style="width: fit-content;">Contact Information</legend>
+                  <div class="input-group mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="Email">
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fa fas fa-envelope"></span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-6">
-                    <input type="text" name="country" class="form-control mb-3" placeholder="Country">
-                    <input type="text" name="postcode" class="form-control mb-3" placeholder="Postal Code">
+                  <div class="input-group mb-3">
+                    <input type="text" name="phone" class="form-control" placeholder="Phone">
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fa fas fa-phone"></span>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-6">
-                    <textarea name="address" class="form-control" placeholder="Enter Address" rows="5"></textarea>
+                </fieldset>
+                <fieldset class="rounded mb-3" style="border: 1px solid #dc3545; padding: 10px">
+                  <legend style="width: fit-content;">Address</legend>
+                  <div class="row mb-3">
+                    <div class="col-6">
+                      <input type="text" name="country" class="form-control mb-3" placeholder="Country">
+                      <input type="text" name="postcode" class="form-control mb-3" placeholder="Postal Code">
+                    </div>
+                    <div class="col-6">
+                      <textarea name="address" class="form-control" placeholder="Enter Address" rows="5"></textarea>
+                    </div>
                   </div>
-                </div>
-                <fieldset class="rounded mb-3" style="border: 1px solid #ddd; padding: 10px">
+                </fieldset>
+                <fieldset class="rounded mb-3" style="border: 1px solid #dc3545; padding: 10px">
                   <legend style="width: fit-content;">Profile Picture</legend>
                   <div class="form-group">
                     <label for="inputThumb"></label>
@@ -101,44 +129,51 @@ if (isset($_SESSION['login_status'])) {
                       </div>
                     </div>
                   </div>
+                  <?= isset($errors['size'])? $errors['size']: "" ?>
+
                   <!-- Selected photo will show here -->
-                  <img src="<?= isset($row['pthumb']) ? "dist/img/pthumbs/" . $row['pthumb'] : '' ?>" alt="selected image will show here" height="200px" id="showSelectedPhoto">
+                  <img src="<?= isset($row['pthumb']) ? "img/profile_pictures/" . $row['pthumb'] : '' ?>" alt="selected image will show here" height="200px" id="showSelectedPhoto">
                 </fieldset>
-                <div class="row mb-3">
-                  <div class="col-6">
-                    <div class="input-group mb-3">
-                      <input type="password" id="password" name="password" class="form-control" placeholder="Password" onkeyup="check()">
-                      <div class="input-group-append">
-                        <div class="input-group-text">
-                          <span class="fa fas fa-lock"></span>
+                <fieldset class="rounded mb-3" style="border: 1px solid #dc3545; padding: 10px">
+                  <legend style="width: fit-content;">Password</legend>
+                  <div class="row mb-3">
+                    <div class="col-6">
+                      <div class="input-group mb-3">
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Password" onkeyup="check()">
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <span class="fa fas fa-lock"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="input-group mb-3">
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Retype password" onkeyup="check()">
+                        <div class="input-group-append">
+                          <div class="input-group-text">
+                            <span class="fa fas fa-lock"></span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="col-6">
-                    <div class="input-group mb-3">
-                      <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Retype password" onkeyup="check()">
-                      <div class="input-group-append">
-                        <div class="input-group-text">
-                          <span class="fa fas fa-lock"></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <span id='message'></span>
+                  <span id='message'></span>
+                  <?= isset($errors['password'])? $errors['password']: "" ?>
+                </fieldset>
                 <div class="row">
                   <div class="col-8">
-                    <div class="icheck-primary">
+                    <!-- <div class="icheck-primary">
                       <input type="checkbox" id="agreeTerms" name="terms" value="agree">
                       <label for="agreeTerms">
                         I agree to the <a href="#">terms</a>
                       </label>
-                    </div>
+                    </div> -->
                   </div>
                   <!-- /.col -->
                   <div class="col-4">
-                    <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    <button type="submit" name="submit" class="btn btn-primary btn-block mb-1">Register</button><br>
+                    <input type="reset" name="reset" value="Reset" class="btn btn-danger btn-block">
                   </div>
                   <!-- /.col -->
                 </div>
@@ -162,6 +197,22 @@ if (isset($_SESSION['login_status'])) {
             <div class="row justify-content-center p-4">
               <a href="index.php"><button class="btn btn-warning px-4 py-2 text-white">Back</button></a>
             </div>
+            <?php
+              if(isset($_POST['submit']) && !isset($passnotmatch)){
+                $fullname = trim($firstname)." ".trim($lastname);
+                $hashedPass = md5($password);
+                
+                $transaction = true;
+                $dbcon->begin_transaction();
+                $sql = "INSERT INTO users VALUES(NULL, '$fullname', '$email', '$hashedPass', DEFAULT, DEFAULT, DEFAULT)";
+                $dbcon->query($sql);
+                if($dbcon->affected_rows!=1){
+                  $transaction = false;
+                }
+
+                
+              }
+            ?>
           </div><!-- /.card -->
         </div>
         <!-- /.register-box -->
@@ -197,6 +248,7 @@ if (isset($_SESSION['login_status'])) {
       }
     }
   </script>
+
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
