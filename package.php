@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
+
 <head>
 	<!-- Mobile Specific Meta -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,13 +29,14 @@
 	<link rel="stylesheet" href="css/styles.css">
 
 	<style>
-		.navbar{
+		.navbar {
 			background-color: rgba(0, 0, 0, 0.8);
 		}
 	</style>
 
-	
+
 </head>
+
 <body>
 	<button onclick="topFunction()" id="myBtn"><i class="fa fa-solid fa-arrow-up"></i></button>
 	<!-- start banner Area -->
@@ -43,10 +45,10 @@
 		<header class="default-header">
 			<?php include("includes/navbar.php") ?>
 		</header>
-		<!-- End Header Area -->				
+		<!-- End Header Area -->
 	</section>
 
-	
+
 	<!-- Start Package Area -->
 	<section class="section-gap">
 		<div class="container">
@@ -149,7 +151,7 @@
 								<img src="img/packages/quba_mosque.jpg" alt="Masjid Quba">
 							</div>
 						</div>
-					</div>					
+					</div>
 				</div>
 				<div id="special_tour" class="mt-40">
 					<h2>Combined (Special) Tour Package</h2>
@@ -242,8 +244,8 @@
 							</div>
 						</div>
 					</div>
-					
-					
+
+
 				</div>
 				<div id="national_tour" class="mt-40">
 					<h2>National Tour</h2>
@@ -293,8 +295,8 @@
 								<img src="img/packages/sylhet.jpg" alt="">
 							</div>
 						</div>
-					</div>					
-										
+					</div>
+
 
 					<div class="nt-cont">
 						<div class="row d-flex justify-content-around">
@@ -344,9 +346,9 @@
 								</div>
 							</div>
 						</div>
-											
-						
-					</div>					
+
+
+					</div>
 
 					<div class="nt-cont">
 						<div class="row d-flex justify-content-around">
@@ -396,8 +398,8 @@
 								</div>
 							</div>
 						</div>
-						
-						
+
+
 					</div>
 
 					<div class="nt-cont">
@@ -448,10 +450,10 @@
 								</div>
 							</div>
 						</div>
-						
-						
+
+
 					</div>
-					
+
 					<div class="nt-cont">
 						<div class="row d-flex justify-content-around">
 							<div class="col-md-7 col-lg-6">
@@ -491,7 +493,7 @@
 											<td>Tk. 10000</td>
 										</tr>
 									</table>
-									<button class="btn btn-secondary booking-btn">Book Now</button>		
+									<button class="btn btn-secondary booking-btn">Book Now</button>
 								</div>
 							</div>
 							<div class="col-md-4 col-lg-5">
@@ -499,8 +501,8 @@
 									<img src="img/packages/mahasthangarh.jpg" alt="">
 								</div>
 							</div>
-						</div>						
-					</div>				
+						</div>
+					</div>
 				</div>
 				<div id="international_tour" class="mt-40">
 					<h2>International Tour</h2>
@@ -551,8 +553,8 @@
 							</div>
 						</div>
 					</div>
-					
-						
+
+
 
 					<div class="nt-cont">
 						<div class="row d-flex justify-content-around">
@@ -602,8 +604,8 @@
 								</div>
 							</div>
 						</div>
-						
-						
+
+
 					</div>
 
 					<div class="nt-cont">
@@ -654,9 +656,9 @@
 								</div>
 							</div>
 						</div>
-						
-						
-					</div>	
+
+
+					</div>
 
 					<div class="nt-cont">
 						<div class="row d-flex justify-content-around">
@@ -706,21 +708,22 @@
 								</div>
 							</div>
 						</div>
-						
-						
+
+
 					</div>
-					
+
 				</div>
 			</div>
 		</div>
 	</section>
 	<!-- End Package Area -->
 
-	
-	<!-- start footer Area -->		
+
+	<!-- start footer Area -->
 	<?php include("includes/footer.php") ?>
 	<!-- End footer Area -->
 
 	<?php include("includes/footer_scripts.php") ?>
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
+
 <head>
 	<!-- Mobile Specific Meta -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,26 +29,27 @@
 	<link rel="stylesheet" href="css/styles.css">
 
 	<style>
-		.navbar{
+		.navbar {
 			background-color: rgba(0, 0, 0, 0.8);
 		}
 	</style>
 
-	
+
 </head>
+
 <body>
 	<button onclick="topFunction()" id="myBtn"><i class="fa fa-solid fa-arrow-up"></i></button>
 	<!-- start banner Area -->
 	<section class="banner-area">
 		<!-- Start Header Area -->
 		<header class="default-header">
-		<?php include("includes/navbar.php") ?>
+			<?php include("includes/navbar.php") ?>
 		</header>
-		<!-- End Header Area -->				
+		<!-- End Header Area -->
 	</section>
 
-	
-	
+
+
 	<!-- Start About Us Area -->
 	<section class="section-gap">
 		<div class="container">
@@ -71,8 +73,8 @@
 						</div>
 					</div>
 				</div>
-				
-				
+
+
 			</div>
 			<div class="services2">
 				<div class="row">
@@ -89,10 +91,10 @@
 							<p>No matter what type of vacation you are going on — a cruise, backpacking trip, island getaway, two-week holiday, round-the-world trip, or family vacation — these destination guides will give you all the information you need so you can travel better, longer, and cheaper. </p>
 							<p>I know how bad it is to get outdated information in print guidebooks. I’ve been the victim of it too many times. I update this section twice a year to keep the content fresh!</p>
 						</div>
-				
+
 					</div>
 				</div>
-				
+
 			</div>
 			<div class="services3">
 				<div class="row">
@@ -115,8 +117,8 @@
 						</div>
 					</div>
 				</div>
-				
-				
+
+
 			</div>
 			<div class="services4">
 				<div class="row">
@@ -126,7 +128,7 @@
 						</div>
 					</div>
 					<div class="col-md-6 col-lg-7">
-						<h2>International Services</h2>				
+						<h2>International Services</h2>
 						<div class="ser_desc">
 							<p>We also have an international team. They helps you to manage all things needs in tour.</p>
 							<p>&gt;&gt; Helps you to get a visa.</p>
@@ -138,17 +140,18 @@
 						</div>
 					</div>
 				</div>
-				
-			</div>			
-		</div>
-	</section>		
-	<!-- End About Us Area -->	
 
-	
-	<!-- start footer Area -->		
+			</div>
+		</div>
+	</section>
+	<!-- End About Us Area -->
+
+
+	<!-- start footer Area -->
 	<?php include("includes/footer.php") ?>
 	<!-- End footer Area -->
 
 	<?php include("includes/footer_scripts.php") ?>
 </body>
+
 </html>

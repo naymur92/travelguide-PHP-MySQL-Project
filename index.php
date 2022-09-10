@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
+
 <head>
 	<!-- Mobile Specific Meta -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,7 +30,7 @@
 	<link rel="stylesheet" href="css/styles.css">
 
 	<style>
-		.navbar{
+		.navbar {
 			background-color: rgba(0, 0, 0, 0.3);
 		}
 	</style>
@@ -37,6 +38,7 @@
 
 
 </head>
+
 <body>
 	<!-- Goto top button -->
 	<button onclick="topFunction()" id="myBtn"><i class="fa fa-solid fa-arrow-up"></i></button>
@@ -47,7 +49,7 @@
 		<header class="default-header">
 			<?php include("includes/navbar.php") ?>
 		</header>
-		<!-- End Header Area -->				
+		<!-- End Header Area -->
 	</section>
 
 
@@ -63,7 +65,7 @@
 							<h1 class="text-uppercase text-white">New Adventure</h1>
 							<p class="text-white"><strong>Bandarban Hill District</strong> is the remotest and least populated district in Bangladesh. The lure of the tallest peaks of Bangladesh, treks through virgin forests and chance to meet more than 15 tribes of the region up close is growing both among Bangladeshis and tourists from other countries.
 							</p>
-							<a href="package.html" class="text-uppercase header-btn">Discover Now</a>	
+							<a href="package.html" class="text-uppercase header-btn">Discover Now</a>
 						</div>
 					</div>
 
@@ -101,8 +103,8 @@
 			</div>
 		</div>
 	</section>
-		
-			
+
+
 
 	<!-- Start Content Area -->
 	<section class="info-area section-gap">
@@ -114,10 +116,10 @@
 						<p>Who are in extremely love with eco friendly system.</p>
 					</div>
 				</div>
-			</div>					
+			</div>
 			<div class="single-info row mt-20">
 				<div class="col-lg-5 col-md-6 col-sm-12 mt-70 text-center no-padding info-left">
-					
+
 					<div class="position-relative">
 						<div class="h-100 bg-white border mt-2">
 							<div class="p-3">
@@ -158,8 +160,8 @@
 											<span class="d-block py-1 text-muted">Travel Info</span>
 										</a>
 									</li>
-	
-	
+
+
 									<li>
 										<a href="">
 											<i class="fa fa-shield fa-3x text-dark"></i>
@@ -182,13 +184,13 @@
 							</div>
 						</div>
 					</div>
-				
+
 				</div>
 				<div class="col-lg-7 col-md-6 col-sm-12 no-padding info-rigth">
 					<div class="info-content">
 						<h2 class="pb-30">Explore The World!</h2>
 						<p>
-							<strong>Bangladesh</strong> is one of the few countries in South Asia, which remains to be explored. Bangladesh has a delicate and distinctive attraction of its own to offer and it is definitely not a tourist haunt like Nepal or India. Bangladesh is like a painter's dream come true with a rich tapestry of colors and texture.									
+							<strong>Bangladesh</strong> is one of the few countries in South Asia, which remains to be explored. Bangladesh has a delicate and distinctive attraction of its own to offer and it is definitely not a tourist haunt like Nepal or India. Bangladesh is like a painter's dream come true with a rich tapestry of colors and texture.
 						</p>
 						<br>
 						<p>
@@ -200,8 +202,8 @@
 		</div>
 	</section>
 	<!-- End about Area -->
-	
-	
+
+
 	<!-- Start project Area -->
 	<section class="project-area section-gap">
 		<div class="container">
@@ -212,7 +214,7 @@
 						<p>We helps people to meet their travel dream. We makes journey easiar. We are happy to help you. <br> See our recent works and decide what to do.</p>
 					</div>
 				</div>
-			</div>						
+			</div>
 			<div class="row justify-content-center d-flex">
 				<div class="active-works-carousel mt-40 col-lg-8">
 					<div class="item">
@@ -252,7 +254,7 @@
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
 	</section>
 	<!-- End project Area -->
 
@@ -267,7 +269,7 @@
 						<p>Who are in extremely love with eco friendly system.</p>
 					</div>
 				</div>
-			</div>						
+			</div>
 			<div class="row">
 				<div class="col-lg-4 col-md-6 ">
 					<div class="single-feature mb-30">
@@ -277,8 +279,8 @@
 						</div>
 						<p>
 							We have expert team to guide travellers at any location.
-						</p>							
-					</div>							
+						</p>
+					</div>
 				</div>
 				<div class="col-lg-4 col-md-6 ">
 					<div class="single-feature mb-30">
@@ -288,8 +290,8 @@
 						</div>
 						<p>
 							We provide professional service to customers as they wants.
-						</p>							
-					</div>							
+						</p>
+					</div>
 				</div>
 				<div class="col-lg-4 col-md-6 ">
 					<div class="single-feature mb-30">
@@ -299,8 +301,8 @@
 						</div>
 						<p>
 							Worldwide team supports all time any need.
-						</p>							
-					</div>							
+						</p>
+					</div>
 				</div>
 				<div class="col-lg-4 col-md-6 ">
 					<div class="single-feature">
@@ -310,8 +312,8 @@
 						</div>
 						<p>
 							We have a great technical team to ensure your online service.
-						</p>							
-					</div>							
+						</p>
+					</div>
 				</div>
 				<div class="col-lg-4 col-md-6 ">
 					<div class="single-feature">
@@ -321,8 +323,8 @@
 						</div>
 						<p>
 							Worldwide top travellers belives in us and they highly recommend us.
-						</p>							
-					</div>							
+						</p>
+					</div>
 				</div>
 				<div class="col-lg-4 col-md-6 ">
 					<div class="single-feature">
@@ -332,19 +334,20 @@
 						</div>
 						<p>
 							Our customers have given lots of positive review in our Website and Social Site.
-						</p>							
-					</div>							
-				</div>																					
+						</p>
+					</div>
+				</div>
 			</div>
-		</div>	
+		</div>
 	</section>
 	<!-- End feature Area -->
 
-	
-	<!-- start footer Area -->		
+
+	<!-- start footer Area -->
 	<?php include("includes/footer.php") ?>
 	<!-- End footer Area -->
 
 	<?php include("includes/footer_scripts.php") ?>
 </body>
+
 </html>
