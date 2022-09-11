@@ -65,7 +65,7 @@
 							<h1 class="text-uppercase text-white">New Adventure</h1>
 							<p class="text-white"><strong>Bandarban Hill District</strong> is the remotest and least populated district in Bangladesh. The lure of the tallest peaks of Bangladesh, treks through virgin forests and chance to meet more than 15 tribes of the region up close is growing both among Bangladeshis and tourists from other countries.
 							</p>
-							<a href="package.html" class="text-uppercase header-btn">Discover Now</a>
+							<a href="package.php" class="text-uppercase header-btn">Discover Now</a>
 						</div>
 					</div>
 
@@ -81,7 +81,7 @@
 							<h4 class="text-white mb-20 text-uppercase">Discover the World!</h4>
 							<h1 class="text-uppercase text-white">New Trip</h1>
 							<p class="text-white">In spite of being a very small country, Bangladesh has an amazing number of about 700 rivers. The Padma, the Meghna, the Jamuna are the big and wide rivers. The Buriganga, the Sitalakshya, the Dhaleswari, the Teesta, the Madhumati, the Gumati, and the Karnafoli are small rivers. Most of the rivers of our country rise from the Himalayas and fall into the Bay of Bengal.</p>
-							<a href="package.html" class="text-uppercase header-btn">Discover Now</a>
+							<a href="package.php" class="text-uppercase header-btn">Discover Now</a>
 						</div>
 					</div>
 				</div>
@@ -96,7 +96,7 @@
 							<h4 class="text-white mb-20 text-uppercase">Discover the World!</h4>
 							<h1 class="text-uppercase text-white">New Experience</h1>
 							<p class="text-white">Travel makes us wealthier. We see new places, meet new people, indulge in new activities. The experiences make us a different person. Travelling isn&apos;t merely about stepping foot on a landmark, but also inhaling the essence of the very place. The culture and the beauty should grow in you.</p>
-							<a href="package.html" class="text-uppercase header-btn">Discover Now</a>
+							<a href="package.php" class="text-uppercase header-btn">Discover Now</a>
 						</div>
 					</div>
 				</div>

@@ -1,6 +1,6 @@
 <?php
 
-include "includes/dbcon.php";
+include_once "includes/dbcon.php";
 
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
@@ -75,6 +75,8 @@ if (isset($_SESSION['login_status'])) {
                   // Check password matching
                   if($password != $confirm_password){
                     $errors['password'] = "<p class='text-danger'>Password didn't match!</p>";
+                  } else if(!preg_match_all("/[0-9A-Za-z!@#$%*]{6,12}/", $password)){
+                    $errors['password'] = "<p class='text-danger'>Password length must be 6-12!</p>";
                   }
 
                   $filename = $_FILES['pthumb']['name'];
@@ -175,7 +177,7 @@ if (isset($_SESSION['login_status'])) {
                   <?= isset($errors['type'])? $errors['type']: "" ?>
 
                   <!-- Selected photo will show here -->
-                  <img src="<?= isset($row['pthumb']) ? "img/profile_pictures/" . $row['pthumb'] : '' ?>" alt="selected image will show here" height="200px" id="showSelectedPhoto">
+                  <img src="" alt="selected image will show here" height="200px" id="showSelectedPhoto">
                 </fieldset>
                 <fieldset class="rounded mb-3" style="border: 1px solid #007bff; padding: 10px">
                   <legend style="width: fit-content;">Password</legend>
@@ -245,7 +247,6 @@ if (isset($_SESSION['login_status'])) {
                 $fullname = trim($firstname)." ".trim($lastname);
                 $hashedPass = md5($password);                
                 
-                $transaction = 1;
                 // File uploading process
                 if(strlen($filename) == 0){
                   $newfilename = null;
@@ -253,48 +254,41 @@ if (isset($_SESSION['login_status'])) {
                   $newfilename = $username.".".$ext;
                   $dest = "img/profile_pictures/";
                   if(is_uploaded_file($tmpname)){
-                    if(!move_uploaded_file($tmpname, $dest.$newfilename))
-                    $upload = "ok";
-                    $transaction = 0;
+                    if(move_uploaded_file($tmpname, $dest.$newfilename)) $upload = "ok";
                   }
                 }
-                
-                $dbcon->autocommit(false);
-                $dbcon->begin_transaction();
+                try {
 
-                // First transaction
-                $sql = "INSERT INTO users VALUES(NULL, '$fullname', '$email', '$username, '$hashedPass', DEFAULT, DEFAULT, DEFAULT)";
-                $dbcon->query($sql);
-                if($dbcon->affected_rows!=1){
-                  $transaction = 0;
-                }
-                // Get last user id
-                $result = $dbcon->query("SELECT MAX(id) FROM users");
-                $row = $result->fetch_array();
-                $user_id = $row[0];
+                  $dbcon->autocommit(false);  // Set autocommit off
+                  $dbcon->begin_transaction();
+  
+                  // First transaction
+                  $sql = "INSERT INTO users VALUES(NULL, '$fullname', '$email', '$username', '$hashedPass', DEFAULT, DEFAULT, DEFAULT)";
+                  $dbcon->query($sql);
 
-                // Second transactions
-                $sql = "INSERT INTO user_info VALUES(NULL, '$firstname', '$lastname', '$email', '$phone', '$country', '$postcode', '$address', '$newfilename', '$user_id')";
-                $dbcon->query($sql);
-                if($dbcon->affected_rows!=1){
-                  $transaction = 0;
-                }
-                if($transaction==0){
-                  $dbcon->rollback();
-                  if(isset($upload))
-                  unlink("$dest.$newfilename");
-                  echo '<script>alert("Problem in registering.")</script>';
-                } else{
+                  // Get last user id
+                  $result = $dbcon->query("SELECT MAX(id) FROM users");
+                  $row = $result->fetch_array();
+                  $user_id = $row[0];
+  
+                  // Second transactions
+                  $sql = "INSERT INTO user_info VALUES(NULL, '$firstname', '$lastname', '$email', '$phone', '$country', '$postcode', '$address', '$newfilename', '$user_id')";
+                  $dbcon->query($sql);
+
+                  // Commit the changes
                   $dbcon->commit();
-                  ?>
-                  <script>
-                    alert("Successfully Registered.")
-                    location.href="login.php"
-                  </script>
-                  <?php
-                }
+                  echo '<script>alert("Successfully Registered."); location.href="login.php";</script>';
 
-                
+                } catch (Throwable $e){
+                  $dbcon->rollback();
+
+                  // delete the uploaded file after rollbacks
+                  if(isset($upload)) unlink("$dest$newfilename");
+                  echo mysqli_error($dbcon);
+                  // echo $e->getMessage();
+                  echo '<script>alert("Problem in registering.")</script>';
+                  // throw $e;
+                }                
               }
             ?>
           </div><!-- /.card -->

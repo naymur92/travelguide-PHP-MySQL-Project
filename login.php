@@ -1,4 +1,4 @@
-<?php include("includes/dbcon.php") ?>
+<?php include_once("includes/dbcon.php") ?>
 <?php
 
   if (session_status() === PHP_SESSION_NONE) {
@@ -52,10 +52,10 @@
             <div class="card-body login-card-body">
               <form action="" method="post">
                 <div class="input-group mb-3">
-                  <input type="email" name="email" class="form-control" placeholder="Email">
+                  <input type="text" name="user" class="form-control" placeholder="Email or Username">
                   <div class="input-group-append">
                     <div class="input-group-text">
-                      <span class="fa fas fa-envelope"></span>
+                      <span class="fa fas fa-user"></span>
                     </div>
                   </div>
                 </div>
@@ -89,7 +89,7 @@
                 extract($_POST);
                 $passHashed = md5("$password");
 
-                $result = $dbcon->query("SELECT * FROM users WHERE email='$email' AND password='$passHashed'");
+                $result = $dbcon->query("SELECT * FROM users WHERE (email='$user' OR username='$user') AND password='$passHashed'");
                 $row = $result->fetch_assoc();
                 if ($result->num_rows != 1) {
                   echo "<h4 class='bg-warning text-center p-4 my-5 rounded'><i class='fa fa-exclamation-triangle text-danger'></i>
@@ -97,7 +97,7 @@
                 } else {
                   $_SESSION['login_status'] = "logged_in";
                   $_SESSION['user_email'] = $row['email'];
-                  $_SESSION['user_name'] = $row['name'];
+                  $_SESSION['name'] = $row['name'];
                   $_SESSION['user_type'] = $row['user_type'];
 
                   switch($_SESSION['user_type']){

@@ -1,3 +1,11 @@
+<?php include_once("dbcon.php") ?>
+<?php
+
+  if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+  }
+
+?>
 <nav class="navbar navbar-expand-lg  navbar-light">
 	<div class="container">
 		<a class="navbar-brand" href="index.php">
@@ -24,10 +32,20 @@
 				<li><a href="about.php">About</a></li>
 				<li><a href="contact.php">Contact</a></li>
 				<li class="dropdown">
-					<a class="dropdown-toggle" href="" id="navbardrop" data-toggle="dropdown"><i class="fa fa-user"></i></a>
+					<a class="dropdown-toggle" href="" id="navbardrop" data-toggle="dropdown"><?= isset($_SESSION['name'])? "<span style='text-transform: capitalize; color: lightblue;'>{$_SESSION['name']}</span>" : "" ?>  <i class="fa fa-user"></i></a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="login.php">Login</a>
-						<a class="dropdown-item" href="register.php">Register</a>
+						<?php if(!isset($_SESSION['login_status'])){ ?>
+							<a class="dropdown-item" href="login.php"><i class="fa fa-sign-in mr-2"></i>Login</a>
+							<a class="dropdown-item" href="register.php"><i class="fa fa-user-plus mr-2"></i>Register</a>
+						<?php } else{ if($_SESSION['user_type'] == 3) { ?>
+							<a class="dropdown-item" href="user_profile.php"><i class="fa fa-user mr-2"></i>My Profile</a>
+							<a class="dropdown-item" href="journey.php"><i class="fa fa-history mr-2"></i>My Journey History</a>
+							<a class="dropdown-item" href="messages.php"><i class="fa fa-commenting mr-2"></i>My Messages</a>
+							<a class="dropdown-item" href="wishlist.php"><i class="fa fa-heart mr-2"></i>My Wishlist</a>							
+							<?php } ?>
+							<a class="dropdown-item" href="<?= $_SESSION['user_type']==3 ? 'user_dashboard.php' : 'managing/' ?>"><i class="fa fa-tachometer mr-2"></i>Dashboard</a>							
+							<button class="btn btn-danger pull-right m-3" style="cursor: pointer;" onclick="location.href='managing/logout.php'"><i class="fa fa-sign-out mr-2"></i>Log Out</button>
+						<?php } ?>
 					</div>
 				</li>
 				<li class="searchBox">

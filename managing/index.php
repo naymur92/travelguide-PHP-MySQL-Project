@@ -133,7 +133,7 @@
             <!-- MAP & BOX PANE -->
             <div class="card">
               <div class="card-header">
-                <h1 class="card-title">Welcome, <span class="text-primary"><?php echo $_SESSION['user_name']; ?></span></h1>
+                <h1 class="card-title">Welcome, <span class="text-primary"><?php echo $_SESSION['name']; ?></span></h1>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">
