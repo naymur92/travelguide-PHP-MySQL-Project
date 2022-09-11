@@ -218,7 +218,7 @@ if (isset($_SESSION['login_status'])) {
                   <!-- /.col -->
                   <div class="col-4">
                     <button type="submit" name="submit" class="btn btn-primary btn-block mb-1">Register</button><br>
-                    <input type="reset" name="reset" value="Reset" class="btn btn-danger btn-block">
+                    <!-- <input type="reset" name="reset" value="Reset" class="btn btn-danger btn-block"> -->
                   </div>
                   <!-- /.col -->
                 </div>
@@ -266,13 +266,8 @@ if (isset($_SESSION['login_status'])) {
                   $sql = "INSERT INTO users VALUES(NULL, '$fullname', '$email', '$username', '$hashedPass', DEFAULT, DEFAULT, DEFAULT)";
                   $dbcon->query($sql);
 
-                  // Get last user id
-                  $result = $dbcon->query("SELECT MAX(id) FROM users");
-                  $row = $result->fetch_array();
-                  $user_id = $row[0];
-  
                   // Second transactions
-                  $sql = "INSERT INTO user_info VALUES(NULL, '$firstname', '$lastname', '$email', '$phone', '$country', '$postcode', '$address', '$newfilename', '$user_id')";
+                  $sql = "INSERT INTO user_info VALUES(NULL, '$firstname', '$lastname', '$email', '$phone', '$country', '$postcode', '$address', '$newfilename', LAST_INSERT_ID())";
                   $dbcon->query($sql);
 
                   // Commit the changes
@@ -284,7 +279,6 @@ if (isset($_SESSION['login_status'])) {
 
                   // delete the uploaded file after rollbacks
                   if(isset($upload)) unlink("$dest$newfilename");
-                  echo mysqli_error($dbcon);
                   // echo $e->getMessage();
                   echo '<script>alert("Problem in registering.")</script>';
                   // throw $e;
