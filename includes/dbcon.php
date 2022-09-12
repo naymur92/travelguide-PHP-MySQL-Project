@@ -1,6 +1,6 @@
 <?php
   // Initialize base url
-  if(!defined('base_url')) define('base_url','http://localhost/TravelGuideBD_V2/');
+  if(!defined('base_url')) define('base_url','http://localhost/travelguide-v2/');
 
   // create database connection
   define("HOST", "localhost");

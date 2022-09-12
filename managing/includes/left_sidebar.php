@@ -98,6 +98,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="users.php?status=active" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Active Users</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="users.php?status=pending" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pending Users</p>

@@ -1,0 +1,14 @@
+CREATE VIEW users_view AS
+SELECT 
+u.id,
+u.name,
+u.email,
+ui.phone,
+ui.address,
+ui.post_code,
+ui.country,
+ui.profile_picture,
+ut.user_type_name,
+u.status
+FROM users u, user_info ui, user_type ut
+WHERE u.id=ui.user_id AND u.user_type=ut.user_type_code;

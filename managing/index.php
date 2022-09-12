@@ -4,7 +4,7 @@
   if (session_status() === PHP_SESSION_NONE) {
     session_start();
   }
-  if(isset($_SESSION['user_type'])){
+  if(isset($_SESSION['login_status'])){
     if(($_SESSION['user_type']==3))
     header("Location:../user_dashboard.php");
   } else {
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>TravelGuideBD-<?= $_SESSION['user_type']==1? "Admin" : "Manager" ?> Panel</title>
+  <title><?= $_SESSION['user_type']==1? "Admin" : "Manager" ?> Panel - TravelGuideBD</title>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
