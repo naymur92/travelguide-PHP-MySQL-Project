@@ -26,7 +26,7 @@ if (isset($_SESSION['login_status']) && isset($_GET['id'])) {
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  
+
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
@@ -68,21 +68,40 @@ if (isset($_SESSION['login_status']) && isset($_GET['id'])) {
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
-            <!-- /.card -->
-            <div class="card">
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table class="table table-bordered table-striped">
-                  <tr>
-                    <th></th>
-                    <td></td>
-                  </tr>
-                </table>
+              <!-- /.card -->
+              <div class="card">
+                <?php
+                if (!isset($_GET['id'])) header("users.php");
+                $id = $_GET['id'];
+                $result = $dbcon->query("SELECT * FROM users_view WHERE id=$id");
+                $row = $result->fetch_assoc();
+                ?>
+                <h2 class="p-4"><?php echo $row['Name']; ?></h2>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table class="table table-bordered table-striped">
+                    <?php
+                    foreach ($row as $header => $value) {
+                    ?>
+                      <tr>
+                        <th style="width: 30%;"><?php echo $header ?></th>
+                        <td style="width: 70%;">
+                          <?php
+                          if ($header == "Picture") {
+                            if (strlen($value) > 0)
+                              echo "<img src='" . base_url . "/img/profile_pictures/$value' height='200px'>";
+                            else echo "No Image!!";
+                          } else echo $value;
+                          ?>
+                        </td>
+                      </tr>
+                    <?php } ?>
+                  </table>
+                </div>
+                <!-- /.card-body -->
               </div>
-              <!-- /.card-body -->
+              <!-- /.card -->
             </div>
-            <!-- /.card -->
-          </div>
           </div>
         </div>
         <!--/. container-fluid -->

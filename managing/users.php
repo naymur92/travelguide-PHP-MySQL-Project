@@ -95,28 +95,6 @@ if (isset($_SESSION['login_status'])) {
       <section class="content">
         <div class="container-fluid">
           <div class="row">
-            <?php
-            if (isset($_GET['type']) && $_GET['type'] == "manager") $sql = "SELECT * FROM users, user_type WHERE user_type_name='Manager' AND user_type=user_type_code";
-            else if (isset($_GET['status'])) {
-              // Restrict manager to view manager in the lists
-              if ($_GET['status'] == "active" && $_SESSION['user_type'] == 1)
-                $sql = "SELECT * FROM users, user_type WHERE user_type!=1 AND status='Active' AND user_type=user_type_code";
-              if ($_GET['status'] == "active" && $_SESSION['user_type'] == 2)
-                $sql = "SELECT * FROM users, user_type WHERE user_type!=1 AND user_type!=2 AND status='Active' AND user_type=user_type_code";
-
-              if ($_GET['status'] == "pending")
-                $sql = "SELECT * FROM users, user_type WHERE status='Pending' AND user_type=user_type_code";
-              if ($_GET['status'] == "muted")
-                $sql = "SELECT * FROM users, user_type WHERE status='Muted' AND user_type=user_type_code";
-              if ($_GET['status'] == "disabled")
-                $sql = "SELECT * FROM users, user_type WHERE status='Disabled' AND user_type=user_type_code";
-            } else {
-              if ($_SESSION['user_type'] == 2)
-                $sql = "SELECT * FROM users, user_type WHERE user_type!=1 AND user_type!=2 AND user_type=user_type_code";
-              if ($_SESSION['user_type'] == 1)
-                $sql = "SELECT * FROM users, user_type WHERE user_type!=1 AND user_type=user_type_code";
-            }
-            ?>
             <div class="col-12">
               <!-- /.card -->
               <div class="card">
@@ -147,8 +125,18 @@ if (isset($_SESSION['login_status'])) {
                     </thead>
                     <tbody>
                       <?php
+                      $sql = "SELECT * FROM users, user_type WHERE user_type!=1 AND user_type=user_type_code";
                       $result = $dbcon->query($sql);
                       while ($row = $result->fetch_assoc()) {
+                        if($_SESSION['user_type'] == 2 && $row['user_type_name'] == "Manager") continue;  // Restrict manager to show manager
+                        if(isset($_GET['type'])) if ($_GET['type'] == "manager" && $row['user_type_name'] != "Manager") continue;  // Show only manager list
+                        if(isset($_GET['status'])){
+                          if ($_GET['status'] == "active" && $row['status'] != "Active") continue;  // Show only active users
+                          if ($_GET['status'] == "pending" && $row['status'] != "Pending") continue;  // Show only pending users
+                          if ($_GET['status'] == "muted" && $row['status'] != "Muted") continue;  // Show only muted users
+                          if ($_GET['status'] == "disabled" && $row['status'] != "Disabled") continue;  // Show only disabled users
+                        }
+
                       ?>
                         <tr>
                           <td><?php echo $row['id'] ?></td>
@@ -164,10 +152,13 @@ if (isset($_SESSION['login_status'])) {
                               <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu" role="menu">
-                              <a class="dropdown-item view_user" href="view_users.php?id=<?php echo $row['id'] ?>"><span class="fa fa-eye text-primary"></span> View</a>
+                              <a class="dropdown-item view_user" href="view_user.php?id=<?php echo $row['id'] ?>"><span class="fa fa-eye text-primary"></span> View</a>
                               <div class="dropdown-divider"></div>
                               <a class="dropdown-item edit_user" href="edit_user.php?id=<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
-                              <?php if ($row['status'] == "Pending" || $row['status'] == "Muted") { ?>
+                              <?php if ($row['status'] == "Active" && $_SESSION['user_type'] == 1 && $row['user_type_name'] == "User") { ?>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item active_user" href="promote_user.php?id=<?php echo $row['id'] ?>"><span class="fa fa-arrow-up text-primary"></span> Promote to Manager</a>
+                              <?php } if ($row['status'] == "Pending" || $row['status'] == "Muted") { ?>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item active_user" href="active_user.php?id=<?php echo $row['id'] ?>"><span class="fa fa-check text-primary"></span> Active User</a>
                               <?php } if ($row['status'] != "Disabled") { ?>
