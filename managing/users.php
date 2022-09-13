@@ -157,16 +157,19 @@ if (isset($_SESSION['login_status'])) {
                               <?php if ($row['status'] != "Disabled") { ?>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item edit_user" href="edit_user.php?id=<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
+                              <?php } if ($row['status'] == "Active" && $_SESSION['user_type'] == 1 && $row['user_type_name'] == "Manager") { ?>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item active_user" href="demote_user.php?id=<?php echo $row['id'] ?>"><span class="fa fa-arrow-down text-danger"></span> Demote to User</a>
                               <?php } if ($row['status'] == "Active" && $_SESSION['user_type'] == 1 && $row['user_type_name'] == "User") { ?>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item active_user" href="promote_user.php?id=<?php echo $row['id'] ?>"><span class="fa fa-arrow-up text-primary"></span> Promote to Manager</a>
                               <?php } if ($row['status'] == "Pending" || $row['status'] == "Muted") { ?>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item active_user" href="active_user.php?id=<?php echo $row['id'] ?>"><span class="fa fa-check text-primary"></span> Active User</a>
-                              <?php } if ($row['status'] != "Disabled" && $row['status'] != "Muted") { ?>
+                              <?php } if ($row['status'] != "Disabled" && $row['status'] != "Muted" && $row['user_type_name'] != "Manager") { ?>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item mute_user" href="mute_user.php?id=<?php echo $row['id'] ?>"><span class="fa fa-ban text-warning"></span> Mute User</a>
-                              <?php } if ($_SESSION['user_type'] == 1 && $row['status'] != "Disabled") { ?>
+                              <?php } if ($_SESSION['user_type'] == 1 && $row['status'] != "Disabled" && $row['user_type_name'] != "Manager") { ?>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item disable_user" href="disable_user.php?id=<?php echo $row['id'] ?>"><span class="fa fa-user-times text-danger"></span> Disable User</a>
                               <?php } ?>
