@@ -182,7 +182,7 @@ CREATE TABLE `view_user_edit` (
 --
 DROP TABLE IF EXISTS `users_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `users_view`  AS SELECT `u`.`id` AS `ID`, `u`.`name` AS `Name`, `u`.`email` AS `Email`, `u`.`username` AS `User Name`, `ui`.`phone` AS `Phone`, concat(`ui`.`address`,'<br><br>',`ui`.`post_code`,'<br><br>',`ui`.`country`) AS `Full Address`, `ui`.`profile_picture` AS `Picture`, `ut`.`user_type_name` AS `Type`, `u`.`status` AS `Status` FROM ((`users` `u` join `user_info` `ui`) join `user_type` `ut`) WHERE `u`.`id` = `ui`.`user_id` AND `u`.`user_type` = `ut`.`user_type_code``user_type_code`  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `users_view`  AS SELECT `u`.`id` AS `ID`, `u`.`name` AS `Name`, `u`.`email` AS `Email`, `u`.`username` AS `User Name`, `ui`.`phone` AS `Phone`, concat(`ui`.`address`,'<br><br>',`ui`.`post_code`,'<br><br>',`ui`.`country`) AS `Full Address`, `ui`.`profile_picture` AS `Picture`, `ut`.`user_type_name` AS `Type`, `u`.`status` AS `Status` FROM ((`users` `u` join `user_info` `ui`) join `user_type` `ut`) WHERE `u`.`id` = `ui`.`user_id` AND `u`.`user_type` = `ut`.`user_type_code`;
 
 -- --------------------------------------------------------
 
@@ -191,7 +191,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_user_edit`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_user_edit`  AS SELECT `u`.`id` AS `id`, `ui`.`first_name` AS `first_name`, `ui`.`last_name` AS `last_name`, `ui`.`email` AS `email`, `ui`.`phone` AS `phone`, `u`.`username` AS `username`, `ui`.`country` AS `country`, `ui`.`post_code` AS `post_code`, `ui`.`address` AS `address`, `ui`.`profile_picture` AS `profile_picture`, `u`.`user_type` AS `user_type`, `u`.`status` AS `status` FROM (`users` `u` join `user_info` `ui`) WHERE `u`.`id` = `ui`.`user_id``user_id`  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_user_edit`  AS SELECT `u`.`id` AS `id`, `ui`.`first_name` AS `first_name`, `ui`.`last_name` AS `last_name`, `ui`.`email` AS `email`, `ui`.`phone` AS `phone`, `u`.`username` AS `username`, `ui`.`country` AS `country`, `ui`.`post_code` AS `post_code`, `ui`.`address` AS `address`, `ui`.`profile_picture` AS `profile_picture`, `u`.`user_type` AS `user_type`, `u`.`status` AS `status` FROM (`users` `u` join `user_info` `ui`) WHERE `u`.`id` = `ui`.`user_id`;
 
 --
 -- Indexes for dumped tables
