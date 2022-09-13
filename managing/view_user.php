@@ -5,9 +5,13 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 if (isset($_SESSION['login_status']) && isset($_GET['id'])) {
-  if (($_SESSION['user_type'] == 3))
-    header("Location:../user_dashboard.php");
-} else {
+  $res = $dbcon->query("SELECT status FROM users WHERE id={$_GET['id']}");
+  $output = $res->fetch_array();
+  if($output[0] == "Disabled") header("Location:users.php");  // Deny view disabled users
+
+  if ($_SESSION['user_type'] == 3) header("Location:../user_dashboard.php");
+} else if (!isset($_GET['id'])) header("Location:users.php");
+else {
   header("Location:../login.php");
 }
 
@@ -66,17 +70,19 @@ if (isset($_SESSION['login_status']) && isset($_GET['id'])) {
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <div class="row">
-            <div class="col-12">
+          <div class="row justify-content-center">
+            <div class="col-8">
               <!-- /.card -->
               <div class="card">
                 <?php
-                if (!isset($_GET['id'])) header("users.php");
                 $id = $_GET['id'];
                 $result = $dbcon->query("SELECT * FROM users_view WHERE id=$id");
                 $row = $result->fetch_assoc();
                 ?>
-                <h2 class="p-4"><?php echo $row['Name']; ?></h2>
+                <div class="row justify-content-between p-4">
+                  <h2><?php echo $row['Name']; ?></h2>
+                  <a href="users.php" class="btn py-2 px-4 btn-outline-info text-bold">Back</a>
+                </div>
                 <!-- /.card-header -->
                 <div class="card-body">
                   <table class="table table-bordered table-striped">
@@ -97,6 +103,22 @@ if (isset($_SESSION['login_status']) && isset($_GET['id'])) {
                       </tr>
                     <?php } ?>
                   </table>
+                  <div class="float-right my-2">
+                    <?php if ($row['Status'] != "Disabled") { ?>
+                      <a class="btn py-2 px-4 btn-outline-info text-bold m-1" href="edit_user.php?id=<?= $id ?>"><span class="fa fa-edit"></span> Edit</a>
+                    <?php } if ($row['Status'] == "Active" && $_SESSION['user_type'] == 1 && $row['Type'] == "User") { ?>
+                      <a class="btn py-2 btn-outline-success text-bold" href="promote_user.php?id=<?= $id ?>"><span class="fa fa-arrow-up"></span> Promote to Manager</a>
+                    <?php }
+                    if ($row['Status'] == "Pending" || $row['Status'] == "Muted") { ?>
+                      <a class="btn py-2 btn-outline-primary text-bold m-1" href="active_user.php?id=<?= $id ?>"><span class="fa fa-check"></span> Active User</a>
+                    <?php }
+                    if ($row['Status'] != "Disabled" && $row['Status'] != "Muted") { ?>
+                      <a class="btn py-2 btn-outline-warning text-bold m-1" href="mute_user.php?id=<?= $id ?>"><span class="fa fa-ban"></span> Mute User</a>
+                    <?php }
+                    if ($_SESSION['user_type'] == 1 && $row['Status'] != "Disabled") { ?>
+                      <a class="btn py-2 btn-outline-danger text-bold m-1" href="disable_user.php?id=<?= $id ?>"><span class="fa fa-user-times"></span> Disable User</a>
+                    <?php } ?>
+                  </div>
                 </div>
                 <!-- /.card-body -->
               </div>

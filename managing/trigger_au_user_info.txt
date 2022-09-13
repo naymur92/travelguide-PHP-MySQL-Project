@@ -1,0 +1,8 @@
+DELIMITER //
+CREATE TRIGGER au_user_info
+AFTER UPDATE ON user_info
+FOR EACH ROW
+BEGIN
+  UPDATE users SET name=CONCAT(NEW.first_name," ",NEW.last_name), email=NEW.email WHERE id=OLD.user_id;
+END //
+DELIMITER ;
