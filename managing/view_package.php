@@ -93,7 +93,7 @@ else {
                             echo html_entity_decode($value);
                           } else if ($header == "Thumbnail") {
                             if (strlen($value) > 0)
-                              echo "<img src='" . base_url . "img/packages/$value' height='200px'>";
+                              echo "<img src='" . base_url . "img/packages/$value' width='100%'>";
                             else echo "No Image!!";
                           } else echo $value;
                           ?>
