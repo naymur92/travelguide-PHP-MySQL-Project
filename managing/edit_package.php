@@ -4,7 +4,7 @@
 if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
-if (isset($_SESSION['login_status'])) {
+if (isset($_SESSION['login_status']) && isset($_GET['id'])) {
   if ($_SESSION['user_type'] == 3) header("Location:../user_dashboard.php");
 } else {
   header("Location:../login.php");
@@ -19,7 +19,7 @@ if (isset($_SESSION['login_status'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>Add Package - TravelGuideBD</title>
+  <title>Edit Package - TravelGuideBD</title>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -55,7 +55,7 @@ if (isset($_SESSION['login_status'])) {
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                 <li class="breadcrumb-item"><a href="packages.php">Packages</a></li>
-                <li class="breadcrumb-item active">Add Package</li>
+                <li class="breadcrumb-item active">Edit Package</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -71,17 +71,22 @@ if (isset($_SESSION['login_status'])) {
               <!-- /.card -->
               <div class="card card-maroon">
                 <div class="card-header text-center">
-                  <h2>Add Package</h2>
+                  <h2>Edit Package</h2>
                 </div>
                 <div class="card-body">
                   <?php
+                  $id = $_GET['id'];
+                  $result = $dbcon->query("SELECT * FROM packages WHERE p_id=$id");
+                  $row = $result->fetch_assoc();
+                  // print_r($row);
+
                   $errors = array();
                   if (isset($_POST['submit'])) {
                     extract($_POST);
                     
                     if(strlen($_FILES['p_thumb']['name']) != 0){
-
                       $filename = $_FILES['p_thumb']['name'];
+
                       // Check file type
                       $ext = explode(".", "$filename");
                       $ext = strtolower(end($ext));
@@ -97,6 +102,8 @@ if (isset($_SESSION['login_status'])) {
   
                       $tmpname = $_FILES['p_thumb']['tmp_name'];
                     }
+
+                    
                   }
                   ?>
                   <form action="" method="post" enctype="multipart/form-data">
@@ -105,31 +112,30 @@ if (isset($_SESSION['login_status'])) {
                       <div class="row mb-3">
                         <div class="col-12 mb-3">
                           <label>Package Name</label>
-                          <input type="text" name="p_name" class="form-control" placeholder="Package Name" value="<?php if (count($errors) > 0) echo $p_name; ?>">
+                          <input type="text" name="p_name" class="form-control" placeholder="Package Name" value="<?php if (count($errors) > 0) echo $p_name; else echo $row['p_name'] ?>">
                         </div>
                         <div class="col-6 mb-3">
                           <label>Package Title</label>
-                          <input type="text" name="p_title" class="form-control" placeholder="Package Title" value="<?php if (count($errors) > 0) echo $p_title; ?>">
+                          <input type="text" name="p_title" class="form-control" placeholder="Package Title" value="<?php if (count($errors) > 0) echo $p_title; else echo $row['p_title'] ?>">
                         </div>
                         <div class="col-6 mb-3">
                           <label>Package Category</label>
                           <select name="p_category" class="form-control">
-                            <option value="" selected hidden>Select One</option>
                             <?php
-                            $result = $dbcon->query("SELECT * FROM package_category");
-                            while ($row = $result->fetch_assoc()) {
+                            $result1 = $dbcon->query("SELECT * FROM package_category");
+                            while ($row1 = $result1->fetch_assoc()) {
                             ?>
-                              <option value="<?= $row['category_id'] ?>"><?= $row['category_id'] . " - " . $row['category_name'] ?></option>
+                              <option value="<?= $row1['category_id'] ?>" <?= $row1['category_id'] == $row['p_category']? "selected" : "" ?>><?= $row1['category_id'] . " - " . $row1['category_name'] ?></option>
                             <?php } ?>
                           </select>
                         </div>
                         <div class="col-12 mb-3">
                           <label>Package Short Description</label>
-                          <textarea name="p_short_des" id="p_short_des" class="form-control textarea" rows="10"></textarea>
+                          <textarea name="p_short_des" id="p_short_des" class="form-control textarea" rows="10"><?= $row['p_short_des'] ?></textarea>
                         </div>
                         <div class="col-12 mb-3">
                           <label>Package Description</label>
-                          <textarea name="p_description" id="p_description" class="form-control textarea" rows="10"></textarea>
+                          <textarea name="p_description" id="p_description" class="form-control textarea" rows="10"><?= $row['p_description'] ?></textarea>
                         </div>
                       </div>
                     </fieldset>
@@ -151,18 +157,18 @@ if (isset($_SESSION['login_status'])) {
                       <?= isset($errors['type']) ? $errors['type'] : "" ?>
 
                       <!-- Selected photo will show here -->
-                      <img src="<?= base_url . "img/packages/" . $row['p_thumb)'] ?>" alt="selected image will show here" height="200px" id="showSelectedPhoto">
+                      <img src="<?= base_url . "img/packages/" . $row['p_thumb'] ?>" alt="selected image will show here" height="200px" id="showSelectedPhoto">
                     </fieldset>
                     <fieldset class="rounded mb-3" style="border: 1px solid #007bff; padding: 10px">
                       <legend style="width: fit-content;">Package Duration</legend>
                       <div class="row mb-3">
                         <div class="col-6">
                           <label>Package Duration (Days)</label>
-                          <input type="text" name="p_dur_days" class="form-control mb-3" placeholder="Package Duration (Days)" value="<?php if (count($errors) > 0) echo $p_dur_days; ?>">
+                          <input type="text" name="p_dur_days" class="form-control mb-3" placeholder="Package Duration (Days)" value="<?php if (count($errors) > 0) echo $p_dur_days; else echo $row['p_dur_days'] ?>">
                         </div>
                         <div class="col-6">
                           <label>Package Duration (Nights)</label>
-                          <input type="text" name="p_dur_nights" class="form-control mb-3" placeholder="Package Duration (Days)" value="<?php if (count($errors) > 0) echo $p_dur_nights; ?>">
+                          <input type="text" name="p_dur_nights" class="form-control mb-3" placeholder="Package Duration (Days)" value="<?php if (count($errors) > 0) echo $p_dur_nights; else echo $row['p_dur_nights'] ?>">
                         </div>
                       </div>
                     </fieldset>
@@ -171,7 +177,7 @@ if (isset($_SESSION['login_status'])) {
                       <div class="row mb-3">
                         <div class="col-6">
                           <label for="">Package Price (Starts From)</label>
-                          <input type="text" name="p_price" class="form-control" placeholder="Package Price">
+                          <input type="text" name="p_price" class="form-control" placeholder="Package Price" value="<?php if (count($errors) > 0) echo $p_price; else echo $row['p_price'] ?>">
                         </div>
                         <div class="col-6">
                           <label>Package Status</label>
@@ -179,18 +185,18 @@ if (isset($_SESSION['login_status'])) {
                           <div class="row rounded px-3" style="border: 1px solid #ddd; padding: 6px;">
                             <div class="col-6">
                               <label for="p_status_av" class="mb-0">Available</label>
-                              <input type="radio" name="p_status" value="Available" id="p_status_av" style="font-size: 1.15rem; margin-left: 10px;">
+                              <input type="radio" name="p_status" value="Available" id="p_status_av" style="font-size: 1.15rem; margin-left: 10px;" <?= $row['p_status'] == "Available" ? "checked" : "" ?>>
                             </div>
                             <div class="col-6">
                               <label for="p_status_cl" class="mb-0">Closed</label>
-                              <input type="radio" name="p_status" value="Closed" id="p_status_cl" style="font-size: 1.15rem; margin-left: 10px;">
+                              <input type="radio" name="p_status" value="Closed" id="p_status_cl" style="font-size: 1.15rem; margin-left: 10px;" <?= $row['p_status'] == "Closed" ? "checked" : "" ?>>
                             </div>
                           </div>
                         </div>
                       </div>
                     </fieldset>
                     <div class="row justify-content-end">
-                      <button type="submit" name="submit" class="btn btn-primary py-2 px-4">Add Package</button><br>
+                      <button type="submit" name="submit" class="btn btn-primary py-2 px-4">Update Package</button><br>
                     </div>
                   </form>
                   <button class="btn btn-outline-warning px-4 py-2" onclick="location.href='packages.php'">Show All Packages</button>
@@ -205,27 +211,22 @@ if (isset($_SESSION['login_status'])) {
                   $p_description = htmlentities($p_description, ENT_QUOTES);
                   // File uploading process
                   $dest = "../img/packages/";
-                  // Generating package id
-                  $res_id = $dbcon->query("SELECT MAX(p_id) FROM packages");
-                  $row_id = $res_id->fetch_row();
-                  $p_id = $row_id[0] + 1;
-
-                  $newfilename = "";
+                  
+                  $newfilename = $row['p_thumb'];
                   if (strlen($_FILES['p_thumb']['name']) != 0) {
-                    $newfilename = $p_id . "." . $ext;
+                    $newfilename = $id . "." . $ext;
                     if (is_uploaded_file($tmpname)) {
                       if (move_uploaded_file($tmpname, $dest . $newfilename)) $upload = "ok";
                     }
                   }
-                  $sql = "INSERT INTO packages VALUES(NULL, '$p_name', '$p_title', '$p_category', '$p_short_des', '$p_description', '$newfilename', '$p_dur_days', '$p_dur_nights', '$p_price', '$p_status', DEFAULT)";
+                  $sql = "UPDATE packages SET p_name='$p_name', p_title='$p_title', p_category='$p_category', p_short_des='$p_short_des', p_description='$p_description', p_thumb='$newfilename', p_dur_days='$p_dur_days', p_dur_nights='$p_dur_nights', p_price='$p_price', p_status='$p_status' WHERE p_id=$id";
                   // echo "<div>$sql</div>";
                   $dbcon->query($sql);
-                  if($dbcon->affected_rows>0){
-                    echo '<script>alert("Successfully Inserted."); location.href="packages.php";</script>';
+                  
+                  if($dbcon->affected_rows == 1){
+                    echo '<script>alert("Successfully Updated."); location.href="packages.php";</script>';
                   } else{
-                    // delete the uploaded file if insert fails
-                    if (isset($upload)) unlink("$dest$newfilename");
-                    echo '<script>alert("Problem in Insert.")</script>';
+                    echo '<script>alert("Data unchanged."); location.href="packages.php";</script>';
                   }
                 }
                 ?>

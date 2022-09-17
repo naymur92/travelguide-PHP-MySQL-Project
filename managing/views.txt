@@ -1,0 +1,30 @@
+CREATE VIEW users_view AS
+SELECT 
+u.id AS ID,
+u.name AS Name,
+u.email AS Email,
+u.username AS 'User Name',
+ui.phone AS Phone,
+CONCAT(ui.address, "<br><br>", ui.post_code, "<br><br>", ui.country) AS 'Full Address',
+ui.profile_picture AS Picture,
+ut.user_type_name AS Type,
+u.status AS Status
+FROM users u, user_info ui, user_type ut
+WHERE u.id=ui.user_id AND u.user_type=ut.user_type_code;
+
+
+
+CREATE VIEW view_packages AS
+SELECT
+p.p_id AS ID,
+p.p_name AS Name,
+p.p_title AS Title,
+pc.category_name AS Category,
+p.p_short_des AS 'Short Description',
+p.p_description AS Description,
+p.p_thumb AS Thumbnail,
+CONCAT(p.p_dur_days, ' Days & ', p.p_dur_nights, ' Nights') AS Duration,
+p.p_status AS Status
+FROM
+packages p, package_category pc
+WHERE p.p_category=pc.category_id;

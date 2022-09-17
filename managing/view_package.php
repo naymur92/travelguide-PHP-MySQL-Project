@@ -5,12 +5,8 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 if (isset($_SESSION['login_status']) && isset($_GET['id'])) {
-  $res = $dbcon->query("SELECT status FROM users WHERE id={$_GET['id']}");
-  $output = $res->fetch_array();
-  if($output[0] == "Disabled" && $_SESSION['user_type'] != 1) header("Location:users.php");  // Deny view disabled users to manager
-
   if ($_SESSION['user_type'] == 3) header("Location:../user_dashboard.php");
-} else if (!isset($_GET['id'])) header("Location:users.php");
+} else if (!isset($_GET['id'])) header("Location:packages.php");
 else {
   header("Location:../login.php");
 }
@@ -24,7 +20,7 @@ else {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>View User - TravelGuideBD</title>
+  <title>View Package - TravelGuideBD</title>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -53,13 +49,13 @@ else {
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0 text-dark">User Details</h1>
+              <h1 class="m-0 text-dark">Package Details</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                <li class="breadcrumb-item"><a href="users.php">Users</a></li>
-                <li class="breadcrumb-item active">User Details</li>
+                <li class="breadcrumb-item"><a href="packages.php">Packages</a></li>
+                <li class="breadcrumb-item active">Package Details</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -71,17 +67,17 @@ else {
       <section class="content">
         <div class="container-fluid">
           <div class="row justify-content-center">
-            <div class="col-8">
+            <div class="col-10">
               <!-- /.card -->
               <div class="card">
                 <?php
                 $id = $_GET['id'];
-                $result = $dbcon->query("SELECT * FROM users_view WHERE id=$id");
+                $result = $dbcon->query("SELECT * FROM view_packages WHERE ID=$id");
                 $row = $result->fetch_assoc();
                 ?>
                 <div class="row justify-content-between p-4">
                   <h2><?php echo $row['Name']; ?></h2>
-                  <a href="users.php" class="btn py-2 px-4 btn-outline-info text-bold">Back</a>
+                  <a href="packages.php" class="btn py-2 px-4 btn-outline-info text-bold">Back</a>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -93,9 +89,11 @@ else {
                         <th style="width: 30%;"><?php echo $header ?></th>
                         <td style="width: 70%;">
                           <?php
-                          if ($header == "Picture") {
+                          if ($header == "Short Description" || $header == "Description") {
+                            echo html_entity_decode($value);
+                          } else if ($header == "Thumbnail") {
                             if (strlen($value) > 0)
-                              echo "<img src='" . base_url . "/img/profile_pictures/$value' height='200px'>";
+                              echo "<img src='" . base_url . "img/packages/$value' height='200px'>";
                             else echo "No Image!!";
                           } else echo $value;
                           ?>
@@ -104,18 +102,12 @@ else {
                     <?php } ?>
                   </table>
                   <div class="float-right my-2">
-                    <?php if ($row['Status'] != "Disabled") { ?>
-                      <a class="btn py-2 px-4 btn-outline-info text-bold m-1" href="edit_user.php?id=<?= $id ?>"><span class="fa fa-edit"></span> Edit</a>
-                    <?php } if ($row['Status'] == "Active" && $_SESSION['user_type'] == 1 && $row['Type'] == "User") { ?>
-                      <a class="btn py-2 btn-outline-success text-bold" href="promote_user.php?id=<?= $id ?>"><span class="fa fa-arrow-up"></span> Promote to Manager</a>
-                    <?php } if ($row['Status'] == "Active" && $_SESSION['user_type'] == 1 && $row['Type'] == "Manager") { ?>
-                      <a class="btn py-2 btn-outline-danger text-bold" href="demote_user.php?id=<?= $id ?>"><span class="fa fa-arrow-down"></span> Demote to User</a>
-                    <?php } if ($row['Status'] == "Pending" || $row['Status'] == "Muted") { ?>
-                      <a class="btn py-2 btn-outline-primary text-bold m-1" href="active_user.php?id=<?= $id ?>"><span class="fa fa-check"></span> Active User</a>
-                    <?php } if ($row['Status'] != "Disabled" && $row['Status'] != "Muted" && $row['Type'] != "Manager") { ?>
-                      <a class="btn py-2 btn-outline-warning text-bold m-1" href="mute_user.php?id=<?= $id ?>"><span class="fa fa-ban"></span> Mute User</a>
-                    <?php } if ($_SESSION['user_type'] == 1 && $row['Status'] != "Disabled" && $row['Type'] != "Manager") { ?>
-                      <a class="btn py-2 btn-outline-danger text-bold m-1" href="disable_user.php?id=<?= $id ?>"><span class="fa fa-user-times"></span> Disable User</a>
+                    <a class="btn py-2 px-4 btn-outline-info text-bold m-1" href="edit_package.php?id=<?= $id ?>"><span class="fa fa-edit"></span> Edit</a>
+                    <?php if ($row['Status'] == "Available") { ?>
+                      <a class="btn py-2 btn-outline-danger text-bold m-1" href="change_p_status.php?close_id=<?= $id ?>"><span class="fa fa-arrow-down"></span> Close Package</a>
+                    <?php }
+                    if ($row['Status'] == "Closed") { ?>
+                      <a class="btn py-2 btn-outline-success text-bold m-1" href="change_p_status.php?publish_id=<?= $id ?>"><span class="fa fa-arrow-up"></span> Publish Package</a>
                     <?php } ?>
                   </div>
                 </div>

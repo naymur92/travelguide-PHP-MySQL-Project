@@ -71,7 +71,7 @@
 									<li>Meet &amp; assist at Jeddah Airport</li>
 									<li>Room Service as per hotel rules.</li>
 									<li>Umrah guidebook in Bangla</li>
-									<li>Ziyarah/ Sightseeing tour in Madinah: Masjid al-Nabawi, Jannatul Baqi, Masjid Quba, Imam Ali [a]'s house, Masjid-e-Jummah etc (on request basis).</li>
+									<li>Ziyarah/ Sightseeing tour in Madinah: Masjid al-Nabawi, Jannatul Baqi, Masjid Quba, Imam Ali [a]&apos;s house, Masjid-e-Jummah etc (on request basis).</li>
 									<li>Ziyarah/ Sightseeing tour in Makkah: Mina, Arafat, Muzdalifa, Jabal-e-Noor, Jabal-e-soor, Jannatul Mualla etc (on request basis).</li>
 									<li>PCR Test before departure from KSA</li>
 								</ul>
@@ -166,16 +166,16 @@
 						</div>
 						<div class="col-md-7 col-lg-6">
 							<div class="package_des">
-								<h3>10 Days Taste of Bandarban|Rangamati|Cox's Bazar|Saint Martin Iland.</h3>
+								<h3>10 Days Taste of Bandarban|Rangamati|Cox&apos;s Bazar|Saint Martin Iland.</h3>
 								<h3>Package Includes:</h3>
 								<ul>
 									<li>Air ticket with all taxes on Biman Dhaka-Chittagong-Dhaka (economy class).</li>
 									<li>02 nights hotel accomodation in Bandarban</li>
 									<li>02 nights hotel accomodation in Rangamati</li>
-									<li>03 nights hotel accomodation in Cox's Bazar</li>
+									<li>03 nights hotel accomodation in Cox&apos;s Bazar</li>
 									<li>03 nights hotel accomodation in Saint Martin</li>
 									<li>Daily breakfast at the hotel (Premium package)</li>
-									<li>Transportation Service: Dhaka International Airport - Chattogram Airport - Bandarban - Rangamati - Cox's Bazar - Saint Martin</li>
+									<li>Transportation Service: Dhaka International Airport - Chattogram Airport - Bandarban - Rangamati - Cox&apos;s Bazar - Saint Martin</li>
 									<li>Health Insurance.</li>
 									<li>Meet &amp; assist at Chattogram Airport</li>
 									<li>Room Service as per hotel rules.</li>
@@ -411,7 +411,7 @@
 							</div>
 							<div class="col-md-7 col-lg-6">
 								<div class="package_des">
-									<h3><i class="fa fa-solid fa-star"></i>3 Days in Cox's Bazars</h3>
+									<h3><i class="fa fa-solid fa-star"></i>3 Days in Cox&apos;s Bazars</h3>
 									<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo quisquam nemo officiis obcaecati, ad dolore maxime sed cupiditate debitis architecto odit. Optio facilis impedit ipsam, saepe, veniam ipsum tempora vel.</p>
 									<h3>Package Price Detail/ Per Person</h3>
 									<table class="table table-responsive table-bordered">
