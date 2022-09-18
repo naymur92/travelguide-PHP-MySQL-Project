@@ -1,4 +1,4 @@
-<p>Welcome, <?= $_SESSION['name'] ?></p>
+<p>Welcome, <strong class="text-primary"><?= $_SESSION['name'] ?></strong></p>
 <ul class="nav nav-pills flex-column">
   <li class="nav-item">
     <a class="nav-link <?php if (stripos($_SERVER['REQUEST_URI'],'user_dashboard.php') !== false) {echo "active";} ?>" href="user_dashboard.php"><i class="fa fa-tachometer mr-2"></i>Dashboard</a>

@@ -7,7 +7,7 @@
 					<p>The Travel Guide BD (TG-BD) is the flagship digital consumer brand. A comprehensive guide to the world&apos;s best travel destinations, its print heritage stretches back more than 30 years, with the online portal reaching its 20-year anniversary in 2019. Available in English, German and Spanish versions, the TG-BD provides detailed and accurate travel content designed to inspire global travellers. It covers all aspects, from cities to airports, cruise ports to ski and beach resorts, attractions to events, and it also includes weekly travel news, features and quizzes. Updated every day by a dedicated global editorial team, the portal logs 1 million+ unique users monthly.</p>
 					<p class="footer-text">Copyright &copy;<script>
 							document.write(new Date().getFullYear());
-						</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">TravelGuide</a></p>
+						</script> All rights reserved by <a href="index.php">TravelGuide</a></p>
 				</div>
 			</div>
 			<div class="col-lg-5  col-md-6 col-sm-6">

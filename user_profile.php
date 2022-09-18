@@ -73,7 +73,8 @@ if (!isset($_SESSION['login_status'])) {
         </div>
         <div class="col-lg-9 col-sm-12">
           <!-- Dashboard content area -->
-          <h1>welcome</h1>
+          <!-- <h1>welcome</h1> -->
+          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Temporibus reiciendis, quisquam excepturi maxime, deleniti aspernatur illo, ducimus a eaque aut sint eveniet neque delectus sed non quae fugit qui placeat!</p>
         </div>
       </div>
     </div>
