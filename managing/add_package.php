@@ -223,9 +223,12 @@ if (isset($_SESSION['login_status'])) {
 
                   $newfilename = "";
                   if (strlen($_FILES['p_thumb']['name'][0]) != 0) {
-                    $newfilename = $p_id . "." . $ext;
-                    if (is_uploaded_file($tmpname)) {
-                      if (move_uploaded_file($tmpname, $dest . $newfilename)) $upload = "ok";
+                    for($i = 0 ; $i < $total ; $i ++) {
+                      $newfilename = $p_id . "." . $ext;
+                      if (is_uploaded_file($tmpname)) {
+                        if (move_uploaded_file($tmpname, $dest . $newfilename)) $upload = "ok";
+                        else unset($upload);
+                      }
                     }
                   }
                   $sql = "INSERT INTO packages VALUES(NULL, '$p_name', '$p_title', '$p_category', '$p_short_des', '$p_description', '$newfilename', '$p_dur_days', '$p_dur_nights', '$p_price', '$p_status', DEFAULT)";
