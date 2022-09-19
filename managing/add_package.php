@@ -20,6 +20,8 @@ if (isset($_SESSION['login_status'])) {
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
   <title>Add Package - TravelGuideBD</title>
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
@@ -31,6 +33,14 @@ if (isset($_SESSION['login_status'])) {
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <style>
+    div.gallery{
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -78,24 +88,26 @@ if (isset($_SESSION['login_status'])) {
                   $errors = array();
                   if (isset($_POST['submit'])) {
                     extract($_POST);
-                    
-                    if(strlen($_FILES['p_thumb']['name']) != 0){
 
-                      $filename = $_FILES['p_thumb']['name'];
-                      // Check file type
-                      $ext = explode(".", "$filename");
-                      $ext = strtolower(end($ext));
-                      $types = array("jpg", "jpeg", "png", "gif");
-                      if (!in_array($ext, $types)) {
-                        $errors['type'] = "<p class='text-danger'>File must be an image file!</p>";
-                      }
-                      // Check file size
-                      $filesize = $_FILES['p_thumb']['size'];
-                      if ($filesize > 500 * 1024) {
-                        $errors['size'] = "<p class='text-danger'>File size must be below 500KB!</p>";
-                      }
+                    $total = count($_FILES['p_thumb']['name']); // Count all selected files
+                    if (strlen($_FILES['p_thumb']['name'][0]) != 0) {
+                      for($i = 0 ; $i < $total ; $i ++){
+                        $filename[$i] = $_FILES['p_thumb']['name'][$i];
+                        // Check file type
+                        $ext[$i] = explode(".", "$filename[$i]");
+                        $ext[$i] = strtolower(end($ext[$i]));
+                        $types = array("jpg", "jpeg", "png", "gif");
+                        if (!in_array($ext[$i], $types)) {
+                          $errors['type'][] = "<p class='text-danger'>\"{$filename[$i]}\" is not an image file!</p>";
+                        }
+                        // Check file size
+                        $filesize[$i] = $_FILES['p_thumb']['size'][$i];
+                        if ($filesize[$i] > 500 * 1024) {
+                          $errors['size'][] = "<p class='text-danger'>\"{$filename[$i]}\" filesize is up to 500KB!</p>";
+                        }
   
-                      $tmpname = $_FILES['p_thumb']['tmp_name'];
+                        $tmpname[$i] = $_FILES['p_thumb']['tmp_name'][$i];
+                      }
                     }
                   }
                   ?>
@@ -136,10 +148,9 @@ if (isset($_SESSION['login_status'])) {
                     <fieldset class="rounded mb-3" style="border: 1px solid #007bff; padding: 10px">
                       <legend style="width: fit-content;">Package Thumbnail</legend>
                       <div class="form-group">
-                        <label for="inputThumb"></label>
                         <div class="input-group">
                           <div class="custom-file">
-                            <input type="file" name="p_thumb" class="custom-file-input" id="inputThumb" onchange="readURL(this);">
+                            <input type="file" name="p_thumb[]" class="custom-file-input" id="gallery-photo-add" accept="image/jpeg, image/png, image/jpg, image/gif" multiple>
                             <label class="custom-file-label" for="exampleInputFile">Select Picture</label>
                           </div>
                           <div class="input-group-append">
@@ -147,11 +158,11 @@ if (isset($_SESSION['login_status'])) {
                           </div>
                         </div>
                       </div>
-                      <?= isset($errors['size']) ? $errors['size'] : "" ?><br>
-                      <?= isset($errors['type']) ? $errors['type'] : "" ?>
+                      <?php if(isset($errors['size']) && count($errors['size'])>0) {foreach($errors['size'] as $err) echo $err;} else echo ""; ?><br>
+                      <?php if(isset($errors['type']) && count($errors['type'])>0) {foreach($errors['type'] as $err) echo $err;} else echo ""; ?>
 
                       <!-- Selected photo will show here -->
-                      <img src="<?= base_url . "img/packages/" . $row['p_thumb)'] ?>" alt="selected image will show here" height="200px" id="showSelectedPhoto">
+                      <div class="gallery"></div>
                     </fieldset>
                     <fieldset class="rounded mb-3" style="border: 1px solid #007bff; padding: 10px">
                       <legend style="width: fit-content;">Package Duration</legend>
@@ -211,7 +222,7 @@ if (isset($_SESSION['login_status'])) {
                   $p_id = $row_id[0] + 1;
 
                   $newfilename = "";
-                  if (strlen($_FILES['p_thumb']['name']) != 0) {
+                  if (strlen($_FILES['p_thumb']['name'][0]) != 0) {
                     $newfilename = $p_id . "." . $ext;
                     if (is_uploaded_file($tmpname)) {
                       if (move_uploaded_file($tmpname, $dest . $newfilename)) $upload = "ok";
@@ -220,9 +231,9 @@ if (isset($_SESSION['login_status'])) {
                   $sql = "INSERT INTO packages VALUES(NULL, '$p_name', '$p_title', '$p_category', '$p_short_des', '$p_description', '$newfilename', '$p_dur_days', '$p_dur_nights', '$p_price', '$p_status', DEFAULT)";
                   // echo "<div>$sql</div>";
                   $dbcon->query($sql);
-                  if($dbcon->affected_rows>0){
+                  if ($dbcon->affected_rows > 0) {
                     echo '<script>alert("Successfully Inserted."); location.href="packages.php";</script>';
-                  } else{
+                  } else {
                     // delete the uploaded file if insert fails
                     if (isset($upload)) unlink("$dest$newfilename");
                     echo '<script>alert("Problem in Insert.")</script>';
@@ -251,23 +262,36 @@ if (isset($_SESSION['login_status'])) {
   </div>
   <!-- ./wrapper -->
   <!-- script for show selected photo -->
-  <script type="text/javascript">
-    function readURL(input) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function(e) {
-          $('#showSelectedPhoto').attr('src', e.target.result);
-        }
-
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
+  <script>
+    $(document).ready(function(){
+      $(function() {
+        // Multiple images preview in browser
+        var imagesPreview = function(input, placeToInsertImagePreview) {
+  
+          if (input.files) {
+            var filesAmount = input.files.length;
+  
+            for (i = 0; i < filesAmount; i++) {
+              var reader = new FileReader();
+  
+              reader.onload = function(event) {
+                $($.parseHTML('<img>')).attr('src', event.target.result).attr('width', '200px').appendTo(placeToInsertImagePreview);
+              }
+  
+              reader.readAsDataURL(input.files[i]);
+            }
+          }
+  
+        };
+  
+        $('#gallery-photo-add').on('change', function() {
+          imagesPreview(this, 'div.gallery');
+        });
+      });
+    });
   </script>
 
   <!-- REQUIRED SCRIPTS -->
-  <!-- jQuery -->
-  <script src="plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap -->
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- overlayScrollbars -->
