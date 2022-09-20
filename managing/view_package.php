@@ -31,6 +31,17 @@ else {
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <style>
+    .images {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .images>img {
+      width: 45%;
+    }
+  </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -92,9 +103,14 @@ else {
                           if ($header == "Short Description" || $header == "Description") {
                             echo html_entity_decode($value);
                           } else if ($header == "Thumbnail") {
-                            if (strlen($value) > 0)
-                              echo "<img src='" . base_url . "img/packages/$value' width='100%'>";
-                            else echo "No Image!!";
+                            if (strlen($value) > 0) {
+                              echo "<div class='images'>";
+                              $fileNames = explode("|", $value);
+                              foreach ($fileNames as $filename) {
+                                echo "<img src='" . base_url . "img/packages/$filename'>";
+                              }
+                              echo "</div>";
+                            } else echo "No Image!!";
                           } else echo $value;
                           ?>
                         </td>

@@ -105,7 +105,10 @@ if (isset($_SESSION['login_status'])) {
                           <td><?php echo $row['category_name'] ?></td>
                           <td><?php echo html_entity_decode($row['p_short_des']) ?></td>
                           <td>
-                            <img src="<?= base_url."/img/packages/".$row['p_thumb'] ?>" alt="Package Thumb" width="100%">  
+                            <?php
+                              $fileNames = explode("|", $row['p_thumb']);
+                            ?>
+                            <img src="<?= base_url."/img/packages/".$fileNames[0]; ?>" alt="Package Thumb" width="100%">  
                           </td>
                           <td><?php echo $row['p_status'] ?></td>
                           <td align="center">

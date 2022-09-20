@@ -221,16 +221,18 @@ if (isset($_SESSION['login_status'])) {
                   $row_id = $res_id->fetch_row();
                   $p_id = $row_id[0] + 1;
 
-                  $newfilename = "";
+                  // $newfilename = "";
                   if (strlen($_FILES['p_thumb']['name'][0]) != 0) {
                     for($i = 0 ; $i < $total ; $i ++) {
-                      $newfilename = $p_id . "." . $ext;
-                      if (is_uploaded_file($tmpname)) {
-                        if (move_uploaded_file($tmpname, $dest . $newfilename)) $upload = "ok";
+                      $newfilename[$i] = $p_id . "($i)." . $ext[$i];
+                      if (is_uploaded_file($tmpname[$i])) {
+                        if (move_uploaded_file($tmpname[$i], $dest . $newfilename[$i])) $upload = "ok";
                         else unset($upload);
                       }
                     }
-                  }
+                    $newfilename = implode("|", $newfilename);
+                  } else $newfilename = "";
+
                   $sql = "INSERT INTO packages VALUES(NULL, '$p_name', '$p_title', '$p_category', '$p_short_des', '$p_description', '$newfilename', '$p_dur_days', '$p_dur_nights', '$p_price', '$p_status', DEFAULT)";
                   // echo "<div>$sql</div>";
                   $dbcon->query($sql);
@@ -238,7 +240,7 @@ if (isset($_SESSION['login_status'])) {
                     echo '<script>alert("Successfully Inserted."); location.href="packages.php";</script>';
                   } else {
                     // delete the uploaded file if insert fails
-                    if (isset($upload)) unlink("$dest$newfilename");
+                    if (isset($upload)) for($i = 0 ; $i < $total ; $i ++){unlink("$dest$newfilename[$i]");}
                     echo '<script>alert("Problem in Insert.")</script>';
                   }
                 }
