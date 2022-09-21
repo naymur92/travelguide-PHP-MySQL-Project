@@ -151,7 +151,7 @@ if (isset($_SESSION['login_status'])) {
                         <div class="input-group">
                           <div class="custom-file">
                             <input type="file" name="p_thumb[]" class="custom-file-input" id="gallery-photo-add" accept="image/jpeg, image/png, image/jpg, image/gif" multiple>
-                            <label class="custom-file-label" for="exampleInputFile">Select Picture</label>
+                            <label class="custom-file-label" for="gallery-photo-add">Select Picture</label>
                           </div>
                           <div class="input-group-append">
                             <span class="input-group-text" id="">Upload</span>
@@ -222,26 +222,29 @@ if (isset($_SESSION['login_status'])) {
                   $p_id = $row_id[0] + 1;
 
                   // $newfilename = "";
+                  $upload = 0;
+                  $fileNames = array();
                   if (strlen($_FILES['p_thumb']['name'][0]) != 0) {
                     for($i = 0 ; $i < $total ; $i ++) {
-                      $newfilename[$i] = $p_id . "($i)." . $ext[$i];
+                      $fileNames[$i] = $p_id . "($i)." . $ext[$i];
                       if (is_uploaded_file($tmpname[$i])) {
-                        if (move_uploaded_file($tmpname[$i], $dest . $newfilename[$i])) $upload = "ok";
-                        else unset($upload);
+                        if (move_uploaded_file($tmpname[$i], $dest . $fileNames[$i])) $upload ++;
                       }
                     }
-                    $newfilename = implode("|", $newfilename);
+                    $newfilename = implode("|", $fileNames);
                   } else $newfilename = "";
 
-                  $sql = "INSERT INTO packages VALUES(NULL, '$p_name', '$p_title', '$p_category', '$p_short_des', '$p_description', '$newfilename', '$p_dur_days', '$p_dur_nights', '$p_price', '$p_status', DEFAULT)";
-                  // echo "<div>$sql</div>";
-                  $dbcon->query($sql);
-                  if ($dbcon->affected_rows > 0) {
-                    echo '<script>alert("Successfully Inserted."); location.href="packages.php";</script>';
-                  } else {
-                    // delete the uploaded file if insert fails
-                    if (isset($upload)) for($i = 0 ; $i < $total ; $i ++){unlink("$dest$newfilename[$i]");}
-                    echo '<script>alert("Problem in Insert.")</script>';
+                  if(count($fileNames) == $upload){
+                    $sql = "INSERT INTO packages VALUES(NULL, '$p_name', '$p_title', '$p_category', '$p_short_des', '$p_description', '$newfilename', '$p_dur_days', '$p_dur_nights', '$p_price', '$p_status', DEFAULT)";
+                    // echo "<div>$sql</div>";
+                    $dbcon->query($sql);
+                    if ($dbcon->affected_rows > 0) {
+                      echo '<script>alert("Successfully Inserted."); location.href="packages.php";</script>';
+                    } else {
+                      // delete the uploaded file if insert fails
+                      if ($upload > 0) for($i = 0 ; $i < $upload ; $i ++){unlink("$dest$newfilename[$i]");}
+                      echo '<script>alert("Problem in Insert.")</script>';
+                    }
                   }
                 }
                 ?>
