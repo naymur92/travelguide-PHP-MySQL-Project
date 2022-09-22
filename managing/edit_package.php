@@ -229,9 +229,9 @@ if (isset($_SESSION['login_status']) && isset($_GET['id'])) {
                   $p_title = htmlentities($p_title, ENT_QUOTES);
                   $p_short_des = htmlentities($p_short_des, ENT_QUOTES);
                   $p_description = htmlentities($p_description, ENT_QUOTES);
+
                   // File uploading process
-                  $dest = "../img/packages/";
-                  
+                  $dest = "../img/packages/";                  
                   $fileNames = array();
                   $upload = 0;
                   if (strlen($_FILES['p_thumb']['name'][0]) != 0) {
@@ -241,7 +241,7 @@ if (isset($_SESSION['login_status']) && isset($_GET['id'])) {
                         if (move_uploaded_file($tmpname[$i], $dest . $fileNames[$i])) $upload ++;
                       }
                     }
-                    $newfilename = implode("|", $fileNames);
+                    $newfilename = implode("|", $fileNames);  // merging file names as string
                   } else $newfilename = $row['p_thumb'];
                   
                   $sql = "UPDATE packages SET p_name='$p_name', p_title='$p_title', p_category='$p_category', p_short_des='$p_short_des', p_description='$p_description', p_thumb='$newfilename', p_dur_days='$p_dur_days', p_dur_nights='$p_dur_nights', p_price='$p_price', p_status='$p_status' WHERE p_id=$id";
