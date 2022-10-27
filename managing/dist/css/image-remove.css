@@ -1,0 +1,20 @@
+.gallery-container img{
+  position: relative;
+}
+.gallery-container{
+  position: relative;
+  width: 200px;
+  height: 113px;
+}
+.remove-image-btn{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: relative;
+  right: -170px;
+  top: -113px;
+  cursor: pointer;
+  padding: 8px 9px;
+  background-color: #d81b60;
+  color: #ddd;
+}

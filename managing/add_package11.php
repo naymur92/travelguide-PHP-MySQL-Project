@@ -31,11 +31,10 @@ if (isset($_SESSION['login_status'])) {
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="dist/css/image-uploader.css">
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  <!-- Image remover -->
-  <link rel="stylesheet" href="dist/css/image-remove.css">
   <style>
     div.gallery{
       width: 100%;
@@ -286,21 +285,7 @@ if (isset($_SESSION['login_status'])) {
               var reader = new FileReader();
   
               reader.onload = function(event) {
-                var container = '<div class="gallery-container">';
-                container += `<img src="${event.target.result}" width="200px">`;
-                container += '<i class="fa fa-times remove-image-btn"></i>';
-                container += '</div>';
-                $(placeToInsertImagePreview).append(container);
-
-                // $($.parseHTML('<img>')).attr('src', event.target.result).attr('width', '200px').appendTo(placeToInsertImagePreview);
-                // $($.parseHTML('<i>')).attr('class', 'fa fa-times remove-image-btn').appendTo(placeToInsertImagePreview);
-
-                // remove image
-                $(".remove-image-btn").click(function(){
-                  // alert("hi");
-                  $(this).parent('.gallery-container').remove();
-                  // $(this).remove();
-                });
+                $($.parseHTML('<img>')).attr('src', event.target.result).attr('width', '200px').appendTo(placeToInsertImagePreview);
               }
   
               reader.readAsDataURL(input.files[i]);
@@ -317,6 +302,7 @@ if (isset($_SESSION['login_status'])) {
   </script>
 
   <!-- REQUIRED SCRIPTS -->
+  <script type="text/javascript" src="dist/js/image-uploader.js"></script>
   <!-- Bootstrap -->
   <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- overlayScrollbars -->
