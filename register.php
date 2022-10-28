@@ -282,7 +282,7 @@ if (isset($_SESSION['login_status'])) {
                   // echo $e->getMessage();
                   echo '<script>alert("Problem in registering.")</script>';
                   // throw $e;
-                }                
+                }
               }
             ?>
           </div><!-- /.card -->

@@ -153,7 +153,7 @@ if (isset($_SESSION['login_status'])) {
                       <div class="form-group">
                         <div class="input-group">
                           <div class="custom-file">
-                            <input type="file" name="p_thumb[]" class="custom-file-input" id="gallery-photo-add" accept="image/jpeg, image/png, image/jpg, image/gif" multiple>
+                            <input type="file" name="p_thumb[]" id="gallery-photo-add" class="image-add custom-file-label" accept="image/jpeg, image/png, image/jpg, image/gif" multiple>
                             <label class="custom-file-label" for="gallery-photo-add">Select Picture</label>
                           </div>
                           <div class="input-group-append">
@@ -161,6 +161,7 @@ if (isset($_SESSION['login_status'])) {
                           </div>
                         </div>
                       </div>
+                      
                       <?php if(isset($errors['size']) && count($errors['size'])>0) {foreach($errors['size'] as $err) echo $err;} else echo ""; ?><br>
                       <?php if(isset($errors['type']) && count($errors['type'])>0) {foreach($errors['type'] as $err) echo $err;} else echo ""; ?>
 
@@ -278,6 +279,8 @@ if (isset($_SESSION['login_status'])) {
       $(function() {
         // Multiple images preview in browser
         var imagesPreview = function(input, placeToInsertImagePreview) {
+          // Empty the container
+          $(placeToInsertImagePreview).empty();
   
           if (input.files) {
             var filesAmount = input.files.length;
@@ -288,7 +291,7 @@ if (isset($_SESSION['login_status'])) {
               reader.onload = function(event) {
                 var container = '<div class="gallery-container">';
                 container += `<img src="${event.target.result}" width="200px">`;
-                container += '<i class="fa fa-times remove-image-btn"></i>';
+                // container += '<i class="fa fa-times remove-image-btn"></i>';
                 container += '</div>';
                 $(placeToInsertImagePreview).append(container);
 
@@ -296,11 +299,9 @@ if (isset($_SESSION['login_status'])) {
                 // $($.parseHTML('<i>')).attr('class', 'fa fa-times remove-image-btn').appendTo(placeToInsertImagePreview);
 
                 // remove image
-                $(".remove-image-btn").click(function(){
-                  // alert("hi");
-                  $(this).parent('.gallery-container').remove();
-                  // $(this).remove();
-                });
+                // $(".remove-image-btn").click(function(){
+                //   $(this).parent('.gallery-container').remove();
+                // });
               }
   
               reader.readAsDataURL(input.files[i]);

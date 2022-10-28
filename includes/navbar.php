@@ -17,33 +17,33 @@
 
 		<div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
 			<ul class="navbar-nav">
-				<li><a href="index.php">Home</a></li>
+				<li><a href="javascript:void(0)" onclick="location.href='index.php'">Home</a></li>
 				<!-- Dropdown -->
 				<li class="dropdown">
-					<a class="dropdown-toggle" href="" id="navbardrop" data-toggle="dropdown">Our Packages</a>
+					<a class="dropdown-toggle" href="javascript:void(0)" id="navbardrop" data-toggle="dropdown">Our Packages</a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="package.php">Umrah Package</a>
-						<a class="dropdown-item" href="package.php#special_tour">Special Tour Package</a>
-						<a class="dropdown-item" href="package.php#national_tour">National Tour</a>
-						<a class="dropdown-item" href="package.php#international_tour">International Tour</a>
+						<a class="dropdown-item" href="javascript:void(0)" onclick="location.href='package.php?catid=1'">Umrah Package</a>
+						<a class="dropdown-item" href="javascript:void(0)" onclick="location.href='package.php?catid=2'">Special Tour Package</a>
+						<a class="dropdown-item" href="javascript:void(0)" onclick="location.href='package.php?catid=3'">National Tour</a>
+						<a class="dropdown-item" href="javascript:void(0)" onclick="location.href='package.php?catid=4'">International Tour</a>
 					</div>
 				</li>
-				<li><a href="gallery.php">Gallery</a></li>
-				<li><a href="about.php">About</a></li>
-				<li><a href="contact.php">Contact</a></li>
+				<li><a href="javascript:void(0)" onclick="location.href='gallery.php'">Gallery</a></li>
+				<li><a href="javascript:void(0)" onclick="location.href='about.php'">About</a></li>
+				<li><a href="javascript:void(0)" onclick="location.href='contact.php'">Contact</a></li>
 				<li class="dropdown">
-					<a class="dropdown-toggle" href="" id="navbardrop" data-toggle="dropdown"><?= isset($_SESSION['name'])? "<span style='text-transform: capitalize; color: lightblue;'>{$_SESSION['name']}</span>" : "" ?>  <i class="fa fa-user"></i></a>
+					<a class="dropdown-toggle" href="javascript:void(0)" id="usernavbardrop" data-toggle="dropdown"><?= isset($_SESSION['name'])? "<span style='text-transform: capitalize; color: lightblue;'>{$_SESSION['name']}</span>" : "" ?>  <i class="fa fa-user"></i></a>
 					<div class="dropdown-menu">
 						<?php if(!isset($_SESSION['login_status'])){ ?>
-							<a class="dropdown-item" href="login.php"><i class="fa fa-sign-in mr-2"></i>Login</a>
-							<a class="dropdown-item" href="register.php"><i class="fa fa-user-plus mr-2"></i>Register</a>
+							<a class="dropdown-item" href="javascript:void(0)" onclick="location.href='login.php'"><i class="fa fa-sign-in mr-2"></i>Login</a>
+							<a class="dropdown-item" href="javascript:void(0)" onclick="location.href='register.php'"><i class="fa fa-user-plus mr-2"></i>Register</a>
 						<?php } else{ if($_SESSION['user_type'] == 3) { ?>
-							<a class="dropdown-item" href="user_profile.php"><i class="fa fa-user mr-2"></i>My Profile</a>
-							<a class="dropdown-item" href="journey.php"><i class="fa fa-history mr-2"></i>My Journey History</a>
-							<a class="dropdown-item" href="messages.php"><i class="fa fa-commenting mr-2"></i>My Messages</a>
-							<a class="dropdown-item" href="wishlist.php"><i class="fa fa-heart mr-2"></i>My Wishlist</a>							
+							<a class="dropdown-item" href="javascript:void(0)" onclick="location.href='user_profile.php'"><i class="fa fa-user mr-2"></i>My Profile</a>
+							<a class="dropdown-item" href="javascript:void(0)" onclick="location.href='journey.php'"><i class="fa fa-history mr-2"></i>My Journey History</a>
+							<a class="dropdown-item" href="javascript:void(0)" onclick="location.href='messages.php'"><i class="fa fa-commenting mr-2"></i>My Messages</a>
+							<a class="dropdown-item" href="javascript:void(0)" onclick="location.href='wishlist.php'"><i class="fa fa-heart mr-2"></i>My Wishlist</a>							
 							<?php } ?>
-							<a class="dropdown-item" href="<?= $_SESSION['user_type']==3 ? 'user_dashboard.php' : 'managing/' ?>"><i class="fa fa-tachometer mr-2"></i>Dashboard</a>							
+							<a class="dropdown-item" href="javascript:void(0)" onclick="location.href='<?= $_SESSION['user_type']==3 ? 'user_dashboard.php' : 'managing/' ?>'"><i class="fa fa-tachometer mr-2"></i>Dashboard</a>							
 							<button class="btn btn-danger pull-right m-3" style="cursor: pointer;" onclick="location.href='managing/logout.php'"><i class="fa fa-sign-out mr-2"></i>Log Out</button>
 						<?php } ?>
 					</div>

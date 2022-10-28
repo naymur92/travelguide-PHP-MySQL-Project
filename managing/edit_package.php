@@ -33,6 +33,8 @@ if (isset($_SESSION['login_status']) && isset($_GET['id'])) {
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- Image remover -->
+  <link rel="stylesheet" href="dist/css/image-remove.css">
   <style>
     div.gallery{
       width: 100%;
@@ -173,7 +175,10 @@ if (isset($_SESSION['login_status']) && isset($_GET['id'])) {
                           if (strlen($row['p_thumb']) > 0) {
                             $images = explode("|", $row['p_thumb']);
                             foreach ($images as $image) {
+                              echo '<div class="gallery-container">';
                               echo "<img src='" . base_url . "img/packages/$image' width='200px' class='prev-photo'>";
+                              echo '<i class="fa fa-times remove-image-btn" val="id='. $id .'&image='. $image .'"></i>';
+                              echo '</div>';
                             }
                           } else echo "No Image!!";
                         ?>
@@ -245,12 +250,11 @@ if (isset($_SESSION['login_status']) && isset($_GET['id'])) {
                   } else $newfilename = $row['p_thumb'];
                   
                   $sql = "UPDATE packages SET p_name='$p_name', p_title='$p_title', p_category='$p_category', p_short_des='$p_short_des', p_description='$p_description', p_thumb='$newfilename', p_dur_days='$p_dur_days', p_dur_nights='$p_dur_nights', p_price='$p_price', p_status='$p_status' WHERE p_id=$id";
-                  // echo "<div>$sql</div>";
                   $dbcon->query($sql);
                   
                   if($dbcon->affected_rows == 1){
                     // checking old and new images and remove unnecessary image
-                    if(count($images) > count($fileNames)){
+                    if(count($images) > count($fileNames) && $upload > 0){
                       foreach($images as $image){
                         if(in_array($image, $fileNames)) continue;
                         unlink("$dest$image");
@@ -307,9 +311,26 @@ if (isset($_SESSION['login_status']) && isset($_GET['id'])) {
         };
   
         $('#gallery-photo-add').on('change', function() {
+          $("div.gallery").empty(); // Empty container
           $("img.prev-photo").hide();
           imagesPreview(this, 'div.gallery');
         });
+      });
+
+      // Image Delete on click
+      $(".remove-image-btn").click(function(){
+        var cur = $(this);
+        var x = cur.attr('val');
+        // alert(x);
+        $.get(
+          'delete_image.php',
+          x,
+          function(data){
+            alert(data);
+            if(data == 'Successfully Deleted')
+            cur.parent('.gallery-container').remove();
+          }
+        );
       });
     });
   </script>

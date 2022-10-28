@@ -99,7 +99,8 @@
                   $_SESSION['user_email'] = $row['email'];
                   $_SESSION['name'] = $row['name'];
                   $_SESSION['user_type'] = $row['user_type'];
-
+                  $_SESSION['user_id'] = $row['id'];
+                  sleep(1);
                   switch($_SESSION['user_type']){
                     case 1:
                       header("Location:./managing/");

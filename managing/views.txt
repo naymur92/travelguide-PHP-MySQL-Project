@@ -28,3 +28,9 @@ p.p_status AS Status
 FROM
 packages p, package_category pc
 WHERE p.p_category=pc.category_id;
+
+SELECT
+*
+FROM
+packages, package_category
+WHERE p_category=category_id;

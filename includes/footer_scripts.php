@@ -51,3 +51,12 @@
 		scrollFunction();
 	}
 </script>
+<script>
+	$(document).ready(function(){
+		$("#navbardrop").click(function(){
+			window.location.href = "package.php";
+			// alert("hi");
+			
+		});
+	});
+</script>

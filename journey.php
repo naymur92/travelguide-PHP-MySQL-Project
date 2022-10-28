@@ -73,8 +73,22 @@ if (!isset($_SESSION['login_status'])) {
         </div>
         <div class="col-lg-9 col-sm-12">
           <!-- Dashboard content area -->
-          <!-- <h1>welcome</h1> -->
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatem natus accusamus facilis architecto possimus voluptas odit repellat, ad modi ratione recusandae cupiditate odio incidunt quisquam, non excepturi tenetur consequuntur.</p>
+          <div class="card">
+            <div class="card-header">
+              <h3>My Bookings</h3>
+            </div>
+            <div class="card-body">
+              <?php
+                $user_id = $_SESSION['user_id'];
+                $sql = "SELECT * FROM bookings WHERE user_id='$user_id'";
+                $result = $dbcon->query($sql);
+                while($row = $result->fetch_assoc()){
+                  echo $row['package_id']."<br>";
+                  echo $row['package_price']."<br>";
+                }
+              ?>
+            </div>
+          </div>
         </div>
       </div>
     </div>
