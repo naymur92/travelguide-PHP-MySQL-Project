@@ -53,10 +53,19 @@
 </script>
 <script>
 	$(document).ready(function(){
+		$(".wishlist-btn").click(function(){
+			var cur = $(this);
+			var w_data = cur.attr('val');
+			$.post(
+          'add_wishlist.php',
+          w_data,
+          function(data){
+            alert(data);
+          }
+        );
+		});
 		$("#navbardrop").click(function(){
 			window.location.href = "package.php";
-			// alert("hi");
-			
 		});
 	});
 </script>

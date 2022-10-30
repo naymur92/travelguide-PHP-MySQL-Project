@@ -140,3 +140,17 @@ img.package-list-img:hover ~ .package-info, .package-info:hover{
 	color: #222;
 	font-weight: 400;
 }
+
+/* Journey history */
+.journey-history .dropdown-menu{
+	background-color: white;
+	margin-top: 2px;
+	color: black;
+	border: 1px solid #ddd;
+}
+.journey-history .dropdown-toggle{
+	cursor: pointer;
+}
+.journey-history .dropdown-item:hover{
+	color: rgba(247, 143, 58, 0.836);
+}

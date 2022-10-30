@@ -33,6 +33,8 @@ if (!isset($_GET['p_id'])) {
   <link rel="stylesheet" href="css/owl.carousel.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/styles.css">
+  <!-- font awesome -->
+	<script src="https://kit.fontawesome.com/cf33cba7d1.js" crossorigin="anonymous"></script>
 
   <style>
     .navbar {
@@ -81,7 +83,8 @@ if (!isset($_GET['p_id'])) {
                 <div class="package-description"><?php echo html_entity_decode($row['p_description']); ?></div>
 
                 <!-- Booking button -->
-                <a href="javascript:void(0)" onclick="location.href='booking.php?p_id=<?php echo $row['p_id']; ?>'"><button class="btn btn-danger">Book Now</button></a>
+                <button class="btn btn-outline-primary wishlist-btn" val='p_id=<?php echo $row['p_id']; ?>'><i class="fa-solid fa-heart"></i>Add to Wishlist</button>
+                <a href="javascript:void(0)" onclick="location.href='booking.php?p_id=<?php echo $row['p_id']; ?>'"><button class="btn btn-outline-success pull-right"><i class="fa-solid fa-check"></i>Book Now</button></a>
               </div>
 
               <!-- Package image section -->

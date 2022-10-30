@@ -125,7 +125,7 @@ if (!isset($_GET['p_id'])) {
                 <fieldset class="rounded">
                   <legend>Payment</legend>
                   <div class="row">
-                    <div class="col-4">
+                    <div class="col-3">
                       <select name="payment_gatway" class="form-control" required>
                         <option value="" disabled selected>Select One</option>
                         <option value="bkash">Bkash</option>
@@ -134,10 +134,13 @@ if (!isset($_GET['p_id'])) {
                         <option value="bank" disabled>Bank</option>
                       </select>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
+                      <input type="text" name="payment_amount" class="form-control" placeholder="Amount" required>
+                    </div>
+                    <div class="col-3">
                       <input type="text" name="payment_from" class="form-control" placeholder="Send from?" required>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                       <input type="text" name="transaction_id" class="form-control" placeholder="Transaction ID" required>
                     </div>
                   </div>
@@ -148,19 +151,14 @@ if (!isset($_GET['p_id'])) {
               // Get values
               $user_id = $_SESSION['user_id'];
               $pac_id = $_GET['p_id'];
-              $pac_price = $p_row['p_price'];
               if(isset($_POST['submit'])){
                 $journey_date = $_POST['journey_date'];
                 $total_person = $_POST['num_person'];
                 $special_note = $_POST['special_note'];
                 $payment_gatway = $_POST['payment_gatway'];
+                $payment_amount = $_POST['payment_amount'];
                 $payment_from = $_POST['payment_from'];
                 $transaction_id = $_POST['transaction_id'];
-
-                // Generating booking id
-                $res_id = $dbcon->query("SELECT MAX(b_id) FROM bookings");
-                $row_id = $res_id->fetch_row();
-                $booking_id = $row_id[0] + 1;
 
                 try {
 
@@ -168,12 +166,11 @@ if (!isset($_GET['p_id'])) {
                   $dbcon->begin_transaction();
   
                   // First transaction
-                  $sql = "INSERT INTO payments VALUES(NULL, '$booking_id', '$user_id', '$payment_gatway', '$transaction_id', '$payment_from', DEFAULT, DEFAULT)";
+                  $sql = "INSERT INTO bookings VALUES(NULL, '$user_id', '$pac_id', DEFAULT, '$journey_date', DEFAULT, '$special_note', '$total_person')";
                   $dbcon->query($sql);
 
-
                   // Second transactions
-                  $sql = "INSERT INTO bookings VALUES(NULL, '$user_id', '$pac_id', '$pac_price', DEFAULT, '$journey_date', DEFAULT, '$special_note', '$total_person', LAST_INSERT_ID())";
+                  $sql = "INSERT INTO payments VALUES(NULL, LAST_INSERT_ID(), '$user_id', '$payment_gatway', '$payment_amount', '$transaction_id', '$payment_from', DEFAULT, DEFAULT)";
                   $dbcon->query($sql);
 
                   // Commit the changes
