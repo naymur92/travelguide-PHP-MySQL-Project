@@ -53,6 +53,7 @@
 </script>
 <script>
 	$(document).ready(function(){
+		// Add wishlist start
 		$(".wishlist-btn").click(function(){
 			var cur = $(this);
 			var w_data = cur.attr('val');
@@ -60,10 +61,45 @@
           'add_wishlist.php',
           w_data,
           function(data){
-            alert(data);
+            if(data == 'not_user'){
+							window.location.href='./managing/index.php';
+						} else if(data == 'not_logged_in'){
+							alert("Please login first!");
+							window.location.href='login.php';
+						} else{
+							alert(data);
+						}
           }
         );
 		});
+		// Add wishlist end
+		
+		// Remove wishlist
+		$(".remove-wishlist").click(function(){
+			var cur = $(this);
+			var wr_data = cur.attr('val');
+			$.post(
+          'remove_wishlist.php',
+          wr_data,
+          function(data){
+						alert(data);
+						cur.parents('tr').remove();
+						// window.location.reload();						
+          }
+				);
+		});
+		// End remove wishlist
+
+		// Calculate total price
+		$(".num-person").on('change', function(){
+			var person = $(this).val();
+			var package_price = $(".pac-price").attr('val');
+
+			var total_price = package_price * person;
+			$(".total-price").attr('value', total_price);			
+		});
+
+		// Package menu redirection
 		$("#navbardrop").click(function(){
 			window.location.href = "package.php";
 		});

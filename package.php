@@ -97,7 +97,9 @@
 										<div class="mb-10"></div>
 										<div class="package-buttons">
 											<a href="javascript:void(0)" onclick="location.href='package-details.php?p_id=<?php echo $row1['p_id']; ?>'"><button class="btn btn-outline-info"><i class="fa-solid fa-eye"></i>View Package</button></a>
+											<?php if(!isset($_SESSION['user_type']) || $_SESSION['user_type'] == 3){ ?>
 											<button class="btn btn-outline-primary wishlist-btn" val='p_id=<?php echo $row1['p_id']; ?>'><i class="fa-solid fa-heart"></i>Add to Wishlist</button>
+											<?php } ?>
 											<a href="javascript:void(0)" onclick="location.href='booking.php?p_id=<?php echo $row1['p_id']; ?>'"><button class="btn btn-outline-success"><i class="fa-solid fa-check"></i>Book Now</button></a>
 										</div>
 									</div>

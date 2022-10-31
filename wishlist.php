@@ -40,6 +40,8 @@ if (!isset($_SESSION['login_status'])) {
   <link rel="stylesheet" href="css/owl.carousel.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/styles.css">
+  <!-- font awesome -->
+	<script src="https://kit.fontawesome.com/cf33cba7d1.js" crossorigin="anonymous"></script>
 
   <style>
     .navbar {
@@ -73,8 +75,37 @@ if (!isset($_SESSION['login_status'])) {
         </div>
         <div class="col-lg-9 col-sm-12">
           <!-- Dashboard content area -->
-          <!-- <h1>welcome</h1> -->
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse nobis numquam fugiat nisi totam sint, repudiandae, earum placeat inventore dolore voluptas, ducimus eos unde quasi soluta magnam error? Vitae, aliquid!</p>
+          <div class="card">
+            <div class="card-header">
+              <h3>My Wishlists</h3>
+            </div>
+            <div class="card-body wishlists">
+              <table class="table table-responsive table-striped">
+                <tr>
+                  <th>Sl. No.</th>
+                  <th>Package Name</th>                  
+                  <th>Action</th>
+                </tr>
+                <?php
+                $user_id = $_SESSION['user_id'];
+                $sql = "SELECT w_id, wishlist_time, p_id, p_name FROM wishlists, packages WHERE package_id=p_id AND user_id=$user_id ORDER BY wishlist_time DESC";
+                $result = $dbcon->query($sql);
+                $sl_no = 1;
+                while ($row = $result->fetch_assoc()) { ?>
+                  <tr>
+                    <td><?php echo $sl_no++; ?></td>
+                    <td><?php echo $row['p_name'] ?></td>
+                    <td class="align-center">
+                    <a href="javascript:void(0)" onclick="location.href='package-details.php?p_id=<?php echo $row['p_id']; ?>'"><button class="btn btn-sm btn-outline-info cursor-pointer"><i class="fa-solid fa-eye"></i> View</button></a>
+                    <a href="javascript:void(0)" onclick="location.href='booking.php?p_id=<?php echo $row['p_id']; ?>'"><button class="btn btn-sm btn-outline-success cursor-pointer"><i class="fa-solid fa-check"></i> Book</button></a>                    
+                    <button class="btn btn-sm btn-outline-danger cursor-pointer remove-wishlist" val='w_id=<?php echo $row['w_id']; ?>'><i class="fa fa-times"></i> Remove</button>
+                    
+                    </td>
+                  </tr>
+                <?php } ?>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -85,21 +116,7 @@ if (!isset($_SESSION['login_status'])) {
   <!-- start footer Area -->
   <?php include("includes/footer.php") ?>
   <!-- End footer Area -->
-  <script>
-    // const links = document.querySelectorAll('.nav-link');
-    
-    // if (links.length) {
-    //   links.forEach((link) => {
-    //     link.addEventListener('click', (e) => {
-    //       links.forEach((link) => {
-    //           link.classList.remove('active');
-    //       });
-    //       e.preventDefault();
-    //       link.classList.add('active');
-    //     });
-    //   });
-    // }
-  </script>
+
   <?php include("includes/footer_scripts.php") ?>
 </body>
 

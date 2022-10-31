@@ -23,8 +23,8 @@ if (isset($_SESSION['login_status']) && isset($_GET['id'])) {
   <!-- jQuery -->
   <script src="plugins/jquery/jquery.min.js"></script>
 
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- font awesome -->
+	<script src="https://kit.fontawesome.com/cf33cba7d1.js" crossorigin="anonymous"></script>
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- summernote -->

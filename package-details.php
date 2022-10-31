@@ -83,7 +83,9 @@ if (!isset($_GET['p_id'])) {
                 <div class="package-description"><?php echo html_entity_decode($row['p_description']); ?></div>
 
                 <!-- Booking button -->
+                <?php if(!isset($_SESSION['user_type']) || $_SESSION['user_type'] == 3){ ?>
                 <button class="btn btn-outline-primary wishlist-btn" val='p_id=<?php echo $row['p_id']; ?>'><i class="fa-solid fa-heart"></i>Add to Wishlist</button>
+                <?php } ?>
                 <a href="javascript:void(0)" onclick="location.href='booking.php?p_id=<?php echo $row['p_id']; ?>'"><button class="btn btn-outline-success pull-right"><i class="fa-solid fa-check"></i>Book Now</button></a>
               </div>
 

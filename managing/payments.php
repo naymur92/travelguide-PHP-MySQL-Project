@@ -19,10 +19,11 @@ if (isset($_SESSION['login_status'])) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>All Packages - TravelGuideBD</title>
+  <title>Payments - TravelGuideBD</title>
+
 
   <!-- font awesome -->
-	<script src="https://kit.fontawesome.com/cf33cba7d1.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/cf33cba7d1.js" crossorigin="anonymous"></script>
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- DataTables -->
@@ -50,13 +51,13 @@ if (isset($_SESSION['login_status'])) {
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0 text-dark">All Packages</h1>
+              <h1 class="m-0 text-dark">All Payments</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                <li class="breadcrumb-item"><a href="packages.php">Packages</a></li>
-                <li class="breadcrumb-item active">All Packages</li>
+                <li class="breadcrumb-item"><a href="payments.php">Payments</a></li>
+                <li class="breadcrumb-item active">All Payments</li>
               </ol>
             </div><!-- /.col -->
           </div><!-- /.row -->
@@ -73,73 +74,86 @@ if (isset($_SESSION['login_status'])) {
               <div class="card">
                 <!-- /.card-header -->
                 <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                  <table id="example1" class="table table-bordered table-striped">
                     <colgroup>
                       <col width="5%">
+                      <col width="10%">
+                      <col width="10%">
+                      <col width="10%">
+                      <col width="10%">
                       <col width="15%">
-                      <col width="15%">
-                      <col width="25%">
                       <col width="20%">
                       <col width="10%">
                       <col width="10%">
                     </colgroup>
                     <thead>
                       <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Short Description</th>
-                        <th>Thumbnail</th>
-                        <th>Stauts</th>
+                        <th>Payment ID</th>
+                        <th>Initial Amount</th>
+                        <th>Total Amount</th>
+                        <th>Payment Received</th>
+                        <th>Gatway</th>
+                        <th>Sender</th>
+                        <th>Transaction ID</th>
+                        <th>Payment Status</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                      $sql = "SELECT * FROM packages, package_category WHERE p_category=category_id";
+                      if (isset($_GET['payment_status'])) {
+                        if ($_GET['payment_status'] == 'Pending')
+                          $sql = "SELECT * FROM view_bookings WHERE `Booking Status`!='Pending' AND `Payment Status`='Pending'";
+                        if ($_GET['payment_status'] == 'Confirmed')
+                          $sql = "SELECT * FROM view_bookings WHERE `Booking Status`!='Pending' AND `Payment Status`='Confirmed'";
+                        if ($_GET['payment_status'] == 'Partial')
+                          $sql = "SELECT * FROM view_bookings WHERE `Booking Status`!='Pending' AND `Payment Status`='Partial'";
+                        if ($_GET['payment_status'] == 'Invalid')
+                          $sql = "SELECT * FROM view_bookings WHERE `Booking Status`!='Pending' AND `Payment Status`='Invalid'";
+                      } else {
+                        $sql = "SELECT * FROM view_bookings WHERE `Booking Status`!='Pending'";
+                      }
                       $result = $dbcon->query($sql);
                       while ($row = $result->fetch_assoc()) { ?>
                         <tr>
-                          <td><?php echo $row['p_id'] ?></td>
-                          <td><?php echo html_entity_decode($row['p_name']) ?></td>
-                          <td><?php echo $row['category_name'] ?></td>
-                          <td><?php echo html_entity_decode($row['p_short_des']) ?></td>
-                          <td>
-                            <?php
-                              $fileNames = explode("|", $row['p_thumb']);
-                            ?>
-                            <img src="<?= base_url."/img/packages/".$fileNames[0]; ?>" alt="Package Thumb" width="100%">  
-                          </td>
-                          <td><?php echo $row['p_status'] ?></td>
+                          <td><?php echo $row['Payment ID'] ?></td>
+                          <td><?php echo $row['Package Cost']; ?></td>
+                          <td><?php echo $row['Package Cost']; ?></td>
+                          <td><?php echo $row['Payment Amount'] ?></td>
+                          <td><?php echo $row['Payment Gatway']; ?></td>
+                          <td><?php echo $row['Send From']; ?></td>
+                          <td><?php echo $row['Transaction ID'] ?></td>
+                          <td><?php echo $row['Payment Status'] ?></td>
                           <td align="center">
-                            <button type="button" class="btn btn-flat p-1 btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
-                              Action
-                              <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <div class="dropdown-menu" role="menu">
-                              <a class="dropdown-item view_user" href="view_package.php?id=<?php echo $row['p_id'] ?>"><span class="fa fa-eye text-primary"></span> View</a>
-                              <div class="dropdown-divider"></div>
-                              <a class="dropdown-item edit_user" href="edit_package.php?id=<?php echo $row['p_id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
-                              <?php if($row['p_status'] == "Available") { ?>
+                            <?php if ($row['Payment Status'] == "Pending" || $row['Payment Status'] == "Partial") { ?>
+                              <button type="button" class="btn btn-flat p-1 btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                                Action
+                                <span class="sr-only">Toggle Dropdown</span>
+                              </button>
+                              <div class="dropdown-menu" role="menu">
+                                <a class="dropdown-item" href="change_pmt_status.php?confirm_pmt_id=<?php echo $row['Payment ID'] ?>"><i class="fa-solid fa-check text-success"></i> Confirm</a>
+                                <?php if ($row['Payment Status'] != "Partial") { ?>
+                                  <div class="dropdown-divider"></div>
+                                  <a class="dropdown-item" href="change_pmt_status.php?partial_pmt_id=<?php echo $row['Payment ID'] ?>"><i class="fa-solid fa-hourglass-half text-info"></i> Mark Parital</a>
+                                <?php } ?>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item active_user" href="change_p_status.php?close_id=<?php echo $row['p_id'] ?>"><span class="fa fa-arrow-down text-danger"></span> Close Package</a>
-                              <?php } if($row['p_status'] == "Closed") { ?>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item active_user" href="change_p_status.php?publish_id=<?php echo $row['p_id'] ?>"><span class="fa fa-arrow-up text-primary"></span> Publish Package</a>
-                              <?php } ?>
-                            </div>
+                                <a class="dropdown-item" href="change_pmt_status.php?invalid_pmt_id=<?php echo $row['Payment ID'] ?>"><i class="fa-solid fa-triangle-exclamation text-danger"></i> Mark Invalid</a>
+                              </div>
+                            <?php } ?>
                           </td>
                         </tr>
                       <?php } ?>
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Short Description</th>
-                        <th>Thumbnail</th>
-                        <th>Stauts</th>
+                        <th>Payment ID</th>
+                        <th>Initial Amount</th>
+                        <th>Total Amount</th>
+                        <th>Payment Received</th>
+                        <th>Gatway</th>
+                        <th>Sender</th>
+                        <th>Transaction ID</th>
+                        <th>Payment Status</th>
                         <th>Action</th>
                       </tr>
                     </tfoot>

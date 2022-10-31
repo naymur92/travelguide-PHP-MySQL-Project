@@ -148,7 +148,7 @@ img.package-list-img:hover ~ .package-info, .package-info:hover{
 	color: black;
 	border: 1px solid #ddd;
 }
-.journey-history .dropdown-toggle{
+.journey-history .dropdown-toggle, .cursor-pointer{
 	cursor: pointer;
 }
 .journey-history .dropdown-item:hover{

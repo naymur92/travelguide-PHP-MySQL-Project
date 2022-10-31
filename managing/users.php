@@ -28,8 +28,8 @@ if (isset($_SESSION['login_status'])) {
 
   <title>Users - TravelGuideBD</title>
 
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- font awesome -->
+	<script src="https://kit.fontawesome.com/cf33cba7d1.js" crossorigin="anonymous"></script>
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- DataTables -->
@@ -168,7 +168,7 @@ if (isset($_SESSION['login_status'])) {
                                 <a class="dropdown-item active_user" href="active_user.php?id=<?php echo $row['id'] ?>"><span class="fa fa-check text-primary"></span> Active User</a>
                               <?php } if ($row['status'] != "Disabled" && $row['status'] != "Muted" && $row['user_type_name'] != "Manager") { ?>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item mute_user" href="mute_user.php?id=<?php echo $row['id'] ?>"><span class="fa fa-ban text-warning"></span> Mute User</a>
+                                <a class="dropdown-item mute_user" href="mute_user.php?id=<?php echo $row['id'] ?>"><i class="fa-solid fa-user-slash text-warning"></i> Mute User</a>
                               <?php } if ($_SESSION['user_type'] == 1 && $row['status'] != "Disabled" && $row['user_type_name'] != "Manager") { ?>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item disable_user" href="disable_user.php?id=<?php echo $row['id'] ?>"><span class="fa fa-user-times text-danger"></span> Disable User</a>

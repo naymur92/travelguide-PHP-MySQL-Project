@@ -43,6 +43,8 @@ if (!isset($_GET['p_id'])) {
   <link rel="stylesheet" href="css/owl.carousel.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/styles.css">
+  <!-- font awesome -->
+	<script src="https://kit.fontawesome.com/cf33cba7d1.js" crossorigin="anonymous"></script>
 
   <style>
     .navbar {
@@ -90,37 +92,43 @@ if (!isset($_GET['p_id'])) {
                   <legend>Package Name</legend>
                   <input type="text" class="form-control" value="<?php echo $p_row['p_name']; ?>" disabled>
                 </fieldset>
-                <div class="row">
-                  <div class="col-6">
-                    <fieldset class="rounded">
-                      <legend>Package Price</legend>
-                      <input type="text" class="form-control" value="Starting from: <?php echo $p_row['p_price']; ?>" disabled>
-                    </fieldset>
-                  </div>
+                <div class="row">                  
                   <div class="col-6">
                     <fieldset class="rounded">
                       <legend>Package Duration</legend>
                       <input type="text" class="form-control" value="<?php echo $p_row['p_dur_days'] . ' Days &amp; ' . $p_row['p_dur_nights'] . ' Nights'; ?>" disabled>
                     </fieldset>
                   </div>
+                  <div class="col-6">
+                    <fieldset class="rounded">
+                      <legend>Package Price</legend>
+                      <input type="text" class="form-control pac-price" value="Starts From: <?php echo $p_row['p_price']; ?>" val="<?php echo $p_row['p_price']; ?>" disabled>
+                    </fieldset>
+                  </div>
                 </div>
                 <div class="row">
-                  <div class="col-6">
+                  <div class="col-4">
                     <fieldset class="rounded">
                       <legend>Select Date</legend>
                       <input type="date" class="form-control" name="journey_date" required>
                     </fieldset>
                   </div>
-                  <div class="col-6">
+                  <div class="col-4">
                     <fieldset class="rounded">
                       <legend>Total Person</legend>
-                      <input type="text" class="form-control" name="num_person" placeholder="Enter how many total person">
+                      <input type="number" class="form-control num-person" name="num_person" placeholder="Total person?" min="1">
+                    </fieldset>
+                  </div>
+                  <div class="col-4">
+                    <fieldset class="rounded">
+                      <legend>Total Price</legend>
+                      <input type="text" class="form-control total-price" name="total_price" value="<?php echo $p_row['p_price']; ?>" disabled>
                     </fieldset>
                   </div>
                 </div>
                 <fieldset class="rounded">
                   <legend>Special Note</legend>
-                  <input type="text" class="form-control" name="special_note" placeholder="Enter special note about trip. Ex. room quality, special food item etc.">
+                  <input type="text" class="form-control" name="special_note" placeholder="Special note. Ex. 4* Double Share, special food item etc.">
                 </fieldset>
                 <fieldset class="rounded">
                   <legend>Payment</legend>
@@ -156,6 +164,10 @@ if (!isset($_GET['p_id'])) {
                 $total_person = $_POST['num_person'];
                 $special_note = $_POST['special_note'];
                 $payment_gatway = $_POST['payment_gatway'];
+
+                // Get total Amount
+                $total_amount = $p_row['p_price'] * $total_person;
+
                 $payment_amount = $_POST['payment_amount'];
                 $payment_from = $_POST['payment_from'];
                 $transaction_id = $_POST['transaction_id'];
@@ -170,7 +182,7 @@ if (!isset($_GET['p_id'])) {
                   $dbcon->query($sql);
 
                   // Second transactions
-                  $sql = "INSERT INTO payments VALUES(NULL, LAST_INSERT_ID(), '$user_id', '$payment_gatway', '$payment_amount', '$transaction_id', '$payment_from', DEFAULT, DEFAULT)";
+                  $sql = "INSERT INTO payments VALUES(NULL, LAST_INSERT_ID(), '$user_id', '$payment_gatway', '$total_amount', '$payment_amount', '$transaction_id', '$payment_from', DEFAULT, DEFAULT)";
                   $dbcon->query($sql);
 
                   // Commit the changes

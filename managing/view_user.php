@@ -26,8 +26,8 @@ else {
 
   <title>View User - TravelGuideBD</title>
 
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- font awesome -->
+	<script src="https://kit.fontawesome.com/cf33cba7d1.js" crossorigin="anonymous"></script>
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 
@@ -75,7 +75,7 @@ else {
               <!-- /.card -->
               <div class="card">
                 <?php
-                $id = $_GET['id'];
+                $id = $_GET['id'];                
                 $result = $dbcon->query("SELECT * FROM users_view WHERE id=$id");
                 $row = $result->fetch_assoc();
                 ?>
@@ -113,7 +113,7 @@ else {
                     <?php } if ($row['Status'] == "Pending" || $row['Status'] == "Muted") { ?>
                       <a class="btn py-2 btn-outline-primary text-bold m-1" href="active_user.php?id=<?= $id ?>"><span class="fa fa-check"></span> Active User</a>
                     <?php } if ($row['Status'] != "Disabled" && $row['Status'] != "Muted" && $row['Type'] != "Manager") { ?>
-                      <a class="btn py-2 btn-outline-warning text-bold m-1" href="mute_user.php?id=<?= $id ?>"><span class="fa fa-ban"></span> Mute User</a>
+                      <a class="btn py-2 btn-outline-warning text-bold m-1" href="mute_user.php?id=<?= $id ?>"><i class="fa-solid fa-user-slash text-warning"></i> Mute User</a>
                     <?php } if ($_SESSION['user_type'] == 1 && $row['Status'] != "Disabled" && $row['Type'] != "Manager") { ?>
                       <a class="btn py-2 btn-outline-danger text-bold m-1" href="disable_user.php?id=<?= $id ?>"><span class="fa fa-user-times"></span> Disable User</a>
                     <?php } ?>

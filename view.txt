@@ -7,15 +7,17 @@ b.journey_date AS 'Journey Date',
 b.booking_status AS 'Booking Status',
 b.extra_info AS 'Extra Info',
 b.total_person AS 'Total Person',
+pac.p_id AS 'Package ID',
 pac.p_name AS 'Package Name',
 CONCAT(pac.p_dur_days, ' Days & ', pac.p_dur_nights, ' Nights') AS Duration,
 pac.p_price AS 'Package Cost',
+pmt.pmt_id AS 'Payment ID',
 pmt.payment_gatway AS 'Payment Gatway',
+pmt.total_amount AS 'Total Amount',
 pmt.payment_amount AS 'Payment Amount',
 pmt.sender_number AS 'Send From',
 pmt.transaction_id AS 'Transaction ID',
 pmt.payment_status AS 'Payment Status'
 FROM
 bookings b, packages pac, payments pmt
-WHERE b.package_id = pac.p_id AND b.b_id = pmt.booking_id
-ORDER BY b.journey_date ASC
+WHERE b.package_id = pac.p_id AND b.b_id = pmt.booking_id;
