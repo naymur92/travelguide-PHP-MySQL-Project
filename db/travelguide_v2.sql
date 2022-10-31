@@ -357,7 +357,7 @@ INSERT INTO `wishlists` (`w_id`, `user_id`, `package_id`, `wishlist_time`) VALUE
 --
 DROP TABLE IF EXISTS `users_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `users_view`  AS SELECT `u`.`id` AS `ID`, `u`.`name` AS `Name`, `u`.`email` AS `Email`, `u`.`username` AS `User Name`, `ui`.`phone` AS `Phone`, concat(`ui`.`address`,'<br><br>',`ui`.`post_code`,'<br><br>',`ui`.`country`) AS `Full Address`, `ui`.`profile_picture` AS `Picture`, `ut`.`user_type_name` AS `Type`, `u`.`status` AS `Status` FROM ((`users` `u` join `user_info` `ui`) join `user_type` `ut`) WHERE `u`.`id` = `ui`.`user_id` AND `u`.`user_type` = `ut`.`user_type_code``user_type_code`  ;
+CREATE VIEW `users_view`  AS SELECT `u`.`id` AS `ID`, `u`.`name` AS `Name`, `u`.`email` AS `Email`, `u`.`username` AS `User Name`, `ui`.`phone` AS `Phone`, concat(`ui`.`address`,'<br><br>',`ui`.`post_code`,'<br><br>',`ui`.`country`) AS `Full Address`, `ui`.`profile_picture` AS `Picture`, `ut`.`user_type_name` AS `Type`, `u`.`status` AS `Status` FROM ((`users` `u` join `user_info` `ui`) join `user_type` `ut`) WHERE `u`.`id` = `ui`.`user_id` AND `u`.`user_type` = `ut`.`user_type_code`;
 
 -- --------------------------------------------------------
 
@@ -366,7 +366,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_bookings`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_bookings`  AS SELECT `b`.`b_id` AS `Booking ID`, `b`.`user_id` AS `User ID`, `b`.`booking_time` AS `Booking Time`, `b`.`journey_date` AS `Journey Date`, `b`.`booking_status` AS `Booking Status`, `b`.`extra_info` AS `Extra Info`, `b`.`total_person` AS `Total Person`, `pac`.`p_id` AS `Package ID`, `pac`.`p_name` AS `Package Name`, concat(`pac`.`p_dur_days`,' Days & ',`pac`.`p_dur_nights`,' Nights') AS `Duration`, `pac`.`p_price` AS `Package Cost`, `pmt`.`pmt_id` AS `Payment ID`, `pmt`.`payment_gatway` AS `Payment Gatway`, `pmt`.`payment_amount` AS `Payment Amount`, `pmt`.`total_amount` AS `Total Amount`, `pmt`.`sender_number` AS `Send From`, `pmt`.`transaction_id` AS `Transaction ID`, `pmt`.`payment_status` AS `Payment Status` FROM ((`bookings` `b` join `packages` `pac`) join `payments` `pmt`) WHERE `b`.`package_id` = `pac`.`p_id` AND `b`.`b_id` = `pmt`.`booking_id`;
+CREATE VIEW `view_bookings`  AS SELECT `b`.`b_id` AS `Booking ID`, `b`.`user_id` AS `User ID`, `b`.`booking_time` AS `Booking Time`, `b`.`journey_date` AS `Journey Date`, `b`.`booking_status` AS `Booking Status`, `b`.`extra_info` AS `Extra Info`, `b`.`total_person` AS `Total Person`, `pac`.`p_id` AS `Package ID`, `pac`.`p_name` AS `Package Name`, concat(`pac`.`p_dur_days`,' Days & ',`pac`.`p_dur_nights`,' Nights') AS `Duration`, `pac`.`p_price` AS `Package Cost`, `pmt`.`pmt_id` AS `Payment ID`, `pmt`.`payment_gatway` AS `Payment Gatway`, `pmt`.`payment_amount` AS `Payment Amount`, `pmt`.`total_amount` AS `Total Amount`, `pmt`.`sender_number` AS `Send From`, `pmt`.`transaction_id` AS `Transaction ID`, `pmt`.`payment_status` AS `Payment Status` FROM ((`bookings` `b` join `packages` `pac`) join `payments` `pmt`) WHERE `b`.`package_id` = `pac`.`p_id` AND `b`.`b_id` = `pmt`.`booking_id`;
 
 -- --------------------------------------------------------
 
@@ -375,7 +375,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_packages`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_packages`  AS SELECT `p`.`p_id` AS `ID`, `p`.`p_name` AS `Name`, `p`.`p_title` AS `Title`, `pc`.`category_name` AS `Category`, `p`.`p_short_des` AS `Short Description`, `p`.`p_description` AS `Description`, `p`.`p_thumb` AS `Thumbnail`, concat(`p`.`p_dur_days`,' Days & ',`p`.`p_dur_nights`,' Nights') AS `Duration`, `p`.`p_status` AS `Status` FROM (`packages` `p` join `package_category` `pc`) WHERE `p`.`p_category` = `pc`.`category_id`;
+CREATE VIEW `view_packages`  AS SELECT `p`.`p_id` AS `ID`, `p`.`p_name` AS `Name`, `p`.`p_title` AS `Title`, `pc`.`category_name` AS `Category`, `p`.`p_short_des` AS `Short Description`, `p`.`p_description` AS `Description`, `p`.`p_thumb` AS `Thumbnail`, concat(`p`.`p_dur_days`,' Days & ',`p`.`p_dur_nights`,' Nights') AS `Duration`, `p`.`p_status` AS `Status` FROM (`packages` `p` join `package_category` `pc`) WHERE `p`.`p_category` = `pc`.`category_id`;
 
 -- --------------------------------------------------------
 
@@ -384,7 +384,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `view_user_edit`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_user_edit`  AS SELECT `u`.`id` AS `id`, `ui`.`first_name` AS `first_name`, `ui`.`last_name` AS `last_name`, `ui`.`email` AS `email`, `ui`.`phone` AS `phone`, `u`.`username` AS `username`, `ui`.`country` AS `country`, `ui`.`post_code` AS `post_code`, `ui`.`address` AS `address`, `ui`.`profile_picture` AS `profile_picture`, `u`.`user_type` AS `user_type`, `u`.`status` AS `status` FROM (`users` `u` join `user_info` `ui`) WHERE `u`.`id` = `ui`.`user_id` ;
+CREATE VIEW `view_user_edit`  AS SELECT `u`.`id` AS `id`, `ui`.`first_name` AS `first_name`, `ui`.`last_name` AS `last_name`, `ui`.`email` AS `email`, `ui`.`phone` AS `phone`, `u`.`username` AS `username`, `ui`.`country` AS `country`, `ui`.`post_code` AS `post_code`, `ui`.`address` AS `address`, `ui`.`profile_picture` AS `profile_picture`, `u`.`user_type` AS `user_type`, `u`.`status` AS `status` FROM (`users` `u` join `user_info` `ui`) WHERE `u`.`id` = `ui`.`user_id` ;
 
 --
 -- Indexes for dumped tables
