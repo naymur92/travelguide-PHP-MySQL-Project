@@ -24,7 +24,7 @@ if (isset($_SESSION['login_status'])) {
   <script src="plugins/jquery/jquery.min.js"></script>
 
   <!-- font awesome -->
-	<script src="https://kit.fontawesome.com/cf33cba7d1.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/cf33cba7d1.js" crossorigin="anonymous"></script>
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- summernote -->
@@ -37,7 +37,7 @@ if (isset($_SESSION['login_status'])) {
   <!-- Image remover -->
   <link rel="stylesheet" href="dist/css/image-remove.css">
   <style>
-    div.gallery{
+    div.gallery {
       width: 100%;
       display: flex;
       flex-wrap: wrap;
@@ -94,7 +94,7 @@ if (isset($_SESSION['login_status'])) {
 
                     $total = count($_FILES['p_thumb']['name']); // Count all selected files
                     if (strlen($_FILES['p_thumb']['name'][0]) != 0) {
-                      for($i = 0 ; $i < $total ; $i ++){
+                      for ($i = 0; $i < $total; $i++) {
                         $filename[$i] = $_FILES['p_thumb']['name'][$i];
                         // Check file type
                         $ext[$i] = explode(".", "$filename[$i]");
@@ -108,7 +108,7 @@ if (isset($_SESSION['login_status'])) {
                         if ($filesize[$i] > 500 * 1024) {
                           $errors['size'][] = "<p class='text-danger'>\"{$filename[$i]}\" filesize is up to 500KB!</p>";
                         }
-  
+
                         $tmpname[$i] = $_FILES['p_thumb']['tmp_name'][$i];
                       }
                     }
@@ -161,9 +161,13 @@ if (isset($_SESSION['login_status'])) {
                           </div>
                         </div>
                       </div>
-                      
-                      <?php if(isset($errors['size']) && count($errors['size'])>0) {foreach($errors['size'] as $err) echo $err;} else echo ""; ?><br>
-                      <?php if(isset($errors['type']) && count($errors['type'])>0) {foreach($errors['type'] as $err) echo $err;} else echo ""; ?>
+
+                      <?php if (isset($errors['size']) && count($errors['size']) > 0) {
+                        foreach ($errors['size'] as $err) echo $err;
+                      } else echo ""; ?><br>
+                      <?php if (isset($errors['type']) && count($errors['type']) > 0) {
+                        foreach ($errors['type'] as $err) echo $err;
+                      } else echo ""; ?>
 
                       <!-- Selected photo will show here -->
                       <div class="gallery"></div>
@@ -229,16 +233,16 @@ if (isset($_SESSION['login_status'])) {
                   $upload = 0;
                   $fileNames = array();
                   if (strlen($_FILES['p_thumb']['name'][0]) != 0) {
-                    for($i = 0 ; $i < $total ; $i ++) {
+                    for ($i = 0; $i < $total; $i++) {
                       $fileNames[$i] = $p_id . "($i)." . $ext[$i];
                       if (is_uploaded_file($tmpname[$i])) {
-                        if (move_uploaded_file($tmpname[$i], $dest . $fileNames[$i])) $upload ++;
+                        if (move_uploaded_file($tmpname[$i], $dest . $fileNames[$i])) $upload++;
                       }
                     }
                     $newfilename = implode("|", $fileNames);
                   } else $newfilename = "";
 
-                  if(count($fileNames) == $upload){
+                  if (count($fileNames) == $upload) {
                     $sql = "INSERT INTO packages VALUES(NULL, '$p_name', '$p_title', '$p_category', '$p_short_des', '$p_description', '$newfilename', '$p_dur_days', '$p_dur_nights', '$p_price', '$p_status', DEFAULT)";
                     // echo "<div>$sql</div>";
                     $dbcon->query($sql);
@@ -246,7 +250,9 @@ if (isset($_SESSION['login_status'])) {
                       echo '<script>alert("Successfully Inserted."); location.href="packages.php";</script>';
                     } else {
                       // delete the uploaded file if insert fails
-                      if ($upload > 0) for($i = 0 ; $i < $upload ; $i ++){unlink("$dest$newfilename[$i]");}
+                      if ($upload > 0) for ($i = 0; $i < $upload; $i++) {
+                        unlink("$dest$newfilename[$i]");
+                      }
                       echo '<script>alert("Problem in Insert.")</script>';
                     }
                   }
@@ -275,19 +281,19 @@ if (isset($_SESSION['login_status'])) {
   <!-- ./wrapper -->
   <!-- script for show selected photo -->
   <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
       $(function() {
         // Multiple images preview in browser
         var imagesPreview = function(input, placeToInsertImagePreview) {
           // Empty the container
           $(placeToInsertImagePreview).empty();
-  
+
           if (input.files) {
             var filesAmount = input.files.length;
-  
+
             for (i = 0; i < filesAmount; i++) {
               var reader = new FileReader();
-  
+
               reader.onload = function(event) {
                 var container = '<div class="gallery-container">';
                 container += `<img src="${event.target.result}" width="200px">`;
@@ -303,13 +309,13 @@ if (isset($_SESSION['login_status'])) {
                 //   $(this).parent('.gallery-container').remove();
                 // });
               }
-  
+
               reader.readAsDataURL(input.files[i]);
             }
           }
-  
+
         };
-  
+
         $('#gallery-photo-add').on('change', function() {
           imagesPreview(this, 'div.gallery');
         });
